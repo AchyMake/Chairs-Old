@@ -10,8 +10,8 @@
     <packaging>jar</packaging>
 
     <name>Chairs</name>
+    <description>Provides Chairs to the server</description>
 
-    <description>adds chairs to the server</description>
     <properties>
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

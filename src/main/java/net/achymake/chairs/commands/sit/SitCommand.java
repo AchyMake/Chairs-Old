@@ -2,16 +2,13 @@ package net.achymake.chairs.commands.sit;
 
 import net.achymake.chairs.Chairs;
 import net.achymake.chairs.files.Message;
+import net.achymake.chairs.settings.Settings;
 import org.bukkit.Location;
-import org.bukkit.NamespacedKey;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
-import org.bukkit.entity.ArmorStand;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
-import org.bukkit.persistence.PersistentDataType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,19 +21,8 @@ public class SitCommand implements CommandExecutor, TabCompleter {
                 if (player.isOnGround()) {
                     if (!player.getLocation().add(0,-1,0).getBlock().isEmpty()){
                         if (!Chairs.isSitting(player)){
-                            Location location = player.getLocation().getBlock().getLocation();
-                            location.add(0.5, -0.9, 0.5);
-                            location.setYaw(player.getLocation().getYaw());
-                            location.setPitch(0.0F);
-                            ArmorStand armorStand = (ArmorStand)player.getWorld().spawnEntity(location, EntityType.ARMOR_STAND);
-                            armorStand.getPersistentDataContainer().set(NamespacedKey.minecraft("chairs.x"), PersistentDataType.DOUBLE, player.getLocation().getX());
-                            armorStand.getPersistentDataContainer().set(NamespacedKey.minecraft("chairs.y"), PersistentDataType.DOUBLE, player.getLocation().getY());
-                            armorStand.getPersistentDataContainer().set(NamespacedKey.minecraft("chairs.z"), PersistentDataType.DOUBLE, player.getLocation().getZ());
-                            armorStand.setVisible(false);
-                            armorStand.setGravity(false);
-                            armorStand.setSmall(true);
-                            player.getPersistentDataContainer().set(NamespacedKey.minecraft("chairs.sitting"), PersistentDataType.STRING,"true");
-                            armorStand.addPassenger(player);
+                            Location location = player.getLocation().getBlock().getLocation().add(0.5, -0.9, 0.5);
+                            Settings.sitCommand(player, location);
                         }
                     }else{
                         Message.sendActionBar(player,"&cYou have to stand on ground");

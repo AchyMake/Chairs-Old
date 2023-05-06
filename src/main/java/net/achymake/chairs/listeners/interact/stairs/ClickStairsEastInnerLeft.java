@@ -16,12 +16,12 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
-public class ClickStairsNorth implements Listener {
-    public ClickStairsNorth(Chairs plugin) {
+public class ClickStairsEastInnerLeft implements Listener {
+    public ClickStairsEastInnerLeft(Chairs plugin) {
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
     @EventHandler(priority = EventPriority.NORMAL)
-    public void onClickEvent(PlayerInteractEvent event) {
+    public void onClickStairsEastInnerLeft(PlayerInteractEvent event) {
         if (!event.getAction().equals(Action.RIGHT_CLICK_BLOCK))return;
         if (event.getClickedBlock() == null)return;
         Player player = event.getPlayer();
@@ -34,9 +34,9 @@ public class ClickStairsNorth implements Listener {
         if (!Tag.STAIRS.isTagged(block.getType()))return;
         if (!event.getBlockFace().equals(BlockFace.UP))return;
         if (!((Stairs)block.getBlockData()).getHalf().equals(Bisected.Half.BOTTOM))return;
-        if (!((Stairs)block.getBlockData()).getFacing().equals(BlockFace.NORTH))return;
-        if (!((Stairs)block.getBlockData()).getShape().equals(Stairs.Shape.STRAIGHT))return;
+        if (!((Stairs) block.getBlockData()).getFacing().equals(BlockFace.EAST))return;
+        if (!((Stairs) block.getBlockData()).getShape().equals(Stairs.Shape.INNER_LEFT))return;
         Location location = event.getClickedBlock().getLocation().add(0.5, -0.4, 0.5);
-        Settings.sitStairsNorth(player, location);
+        Settings.sitStairsEastInnerLeft(player, location);
     }
 }

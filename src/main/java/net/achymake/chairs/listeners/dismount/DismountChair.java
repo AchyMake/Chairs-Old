@@ -25,8 +25,8 @@ public class DismountChair implements Listener {
         double y = armorStand.getPersistentDataContainer().get(NamespacedKey.minecraft("chairs.y"), PersistentDataType.DOUBLE);
         double z = armorStand.getPersistentDataContainer().get(NamespacedKey.minecraft("chairs.z"), PersistentDataType.DOUBLE);
         Player player = (Player) event.getEntity();
-        player.teleport(new Location(player.getWorld(),x,y,z,player.getLocation().getYaw(),player.getLocation().getPitch()));
-        player.getPersistentDataContainer().set(NamespacedKey.minecraft("chairs.sitting"),PersistentDataType.STRING,"false");
+        player.teleport(new Location(player.getWorld(), x, y, z, player.getLocation().getYaw(),player.getLocation().getPitch()));
+        player.getPersistentDataContainer().set(NamespacedKey.minecraft("chairs.sitting"),PersistentDataType.STRING, "false");
         armorStand.remove();
     }
 }
