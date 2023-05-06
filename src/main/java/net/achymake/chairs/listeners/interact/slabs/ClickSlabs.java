@@ -17,7 +17,7 @@ import org.bukkit.persistence.PersistentDataType;
 
 public class ClickSlabs implements Listener {
     public ClickSlabs(Chairs plugin) {
-        Bukkit.getPluginManager().registerEvents(this, plugin);
+        plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
     @EventHandler(priority = EventPriority.NORMAL)
     public void onClickEvent(PlayerInteractEvent event) {

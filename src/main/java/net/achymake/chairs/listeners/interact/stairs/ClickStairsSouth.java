@@ -18,7 +18,7 @@ import org.bukkit.persistence.PersistentDataType;
 
 public class ClickStairsSouth implements Listener {
     public ClickStairsSouth(Chairs plugin) {
-        Bukkit.getPluginManager().registerEvents(this, plugin);
+        plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
     @EventHandler(priority = EventPriority.NORMAL)
     public void onClickEvent(PlayerInteractEvent event) {

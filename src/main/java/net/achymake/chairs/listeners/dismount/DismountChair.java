@@ -1,7 +1,6 @@
 package net.achymake.chairs.listeners.dismount;
 
 import net.achymake.chairs.Chairs;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.ArmorStand;
@@ -15,7 +14,7 @@ import org.spigotmc.event.entity.EntityDismountEvent;
 
 public class DismountChair implements Listener {
     public DismountChair(Chairs plugin) {
-        Bukkit.getPluginManager().registerEvents(this, plugin);
+        plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
     @EventHandler(priority = EventPriority.NORMAL)
     public void onSneakEvent(EntityDismountEvent event) {

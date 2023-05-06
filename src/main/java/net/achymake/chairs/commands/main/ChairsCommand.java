@@ -14,7 +14,7 @@ import java.util.List;
 public class ChairsCommand implements CommandExecutor, TabCompleter {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (args.length == 0){
-            Message.send(sender, "&6"+Chairs.instance.getName()+"&f "+Chairs.instance.getDescription().getVersion());
+            Message.send(sender, "&6"+Chairs.getInstance().getName()+"&f "+Chairs.getInstance().getDescription().getVersion());
         }
         if (args.length == 1){
             if (args[0].equalsIgnoreCase("reload")){

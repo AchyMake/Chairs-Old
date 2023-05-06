@@ -16,7 +16,7 @@ import org.bukkit.persistence.PersistentDataType;
 
 public class ClickCarpets implements Listener {
     public ClickCarpets(Chairs plugin) {
-        Bukkit.getPluginManager().registerEvents(this, plugin);
+        plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
     @EventHandler(priority = EventPriority.NORMAL)
     public void onClickEvent(PlayerInteractEvent event) {

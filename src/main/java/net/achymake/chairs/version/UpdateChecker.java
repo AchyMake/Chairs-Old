@@ -2,7 +2,6 @@ package net.achymake.chairs.version;
 
 import net.achymake.chairs.Chairs;
 import net.achymake.chairs.files.Message;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.io.IOException;
@@ -10,7 +9,6 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.Scanner;
 import java.util.function.Consumer;
-
 public class UpdateChecker {
     private final Chairs plugin;
     private final int resourceId;
@@ -19,7 +17,7 @@ public class UpdateChecker {
         this.resourceId = resourceId;
     }
     public void getVersion(Consumer<String> consumer) {
-        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
+        plugin.getServer().getScheduler().runTaskAsynchronously(plugin, () -> {
             try {
                 InputStream inputStream = (new URL("https://api.spigotmc.org/legacy/update.php?resource=" + resourceId)).openStream();
                 Scanner scanner = new Scanner(inputStream);
@@ -35,25 +33,25 @@ public class UpdateChecker {
             }
         });
     }
-    public static void getUpdate(Chairs plugin) {
-        if (plugin.getConfig().getBoolean("notify-update.enable")) {
-            (new UpdateChecker(plugin, 104881)).getVersion((latest) -> {
-                if (plugin.getDescription().getVersion().equalsIgnoreCase(latest)) {
+    public void getUpdate() {
+        if (this.plugin.getConfig().getBoolean("notify-update.enable")) {
+            (new UpdateChecker(this.plugin, this.resourceId)).getVersion((latest) -> {
+                if (this.plugin.getDescription().getVersion().equalsIgnoreCase(latest)) {
                     Message.sendLog("You are using the latest version");
                 } else {
                     Message.sendLog("New update: " + latest);
-                    Message.sendLog("Current version: " + plugin.getDescription().getVersion());
+                    Message.sendLog("Current version: " + this.plugin.getDescription().getVersion());
                 }
             });
         }
     }
-    public static void sendMessage(Player player) {
-        if (Chairs.instance.getConfig().getBoolean("notify-update.enable")) {
-            (new UpdateChecker(Chairs.instance, 104881)).getVersion((latest) -> {
-                if (!Chairs.instance.getDescription().getVersion().equalsIgnoreCase(latest)) {
-                    Message.send(player,"&6" + Chairs.instance.getName() + " Update:");
+    public void sendMessage(Player player) {
+        if (plugin.getConfig().getBoolean("notify-update.enable")) {
+            (new UpdateChecker(plugin, this.resourceId)).getVersion((latest) -> {
+                if (!plugin.getDescription().getVersion().equalsIgnoreCase(latest)) {
+                    Message.send(player,"&6" + plugin.getName() + " Update:");
                     Message.send(player,"&6new release: &f" + latest);
-                    Message.send(player,"&6current: &f" + Chairs.instance.getDescription().getVersion());
+                    Message.send(player,"&6current: &f" + plugin.getDescription().getVersion());
                 }
             });
         }

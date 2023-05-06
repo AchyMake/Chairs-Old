@@ -23,7 +23,7 @@ public class SitCommand implements CommandExecutor, TabCompleter {
             if (args.length == 0){
                 if (player.isOnGround()) {
                     if (!player.getLocation().add(0,-1,0).getBlock().isEmpty()){
-                        if (!Chairs.instance.isSitting(player)){
+                        if (!Chairs.isSitting(player)){
                             Location location = player.getLocation().getBlock().getLocation();
                             location.add(0.5, -0.9, 0.5);
                             location.setYaw(player.getLocation().getYaw());
@@ -35,7 +35,7 @@ public class SitCommand implements CommandExecutor, TabCompleter {
                             armorStand.setVisible(false);
                             armorStand.setGravity(false);
                             armorStand.setSmall(true);
-                            player.getPersistentDataContainer().set(NamespacedKey.minecraft("chairs.sitting"),PersistentDataType.STRING,"true");
+                            player.getPersistentDataContainer().set(NamespacedKey.minecraft("chairs.sitting"), PersistentDataType.STRING,"true");
                             armorStand.addPassenger(player);
                         }
                     }else{
