@@ -125,9 +125,10 @@ public class Settings {
         double z = data(player).get(NamespacedKey.minecraft("chairs.z"), PersistentDataType.DOUBLE);
         float yaw = player.getLocation().getYaw();
         float pitch = player.getLocation().getPitch();
-        Location location = new  Location(player.getWorld(), x, y, z, yaw, pitch);
-        player.teleport(location);
-        getChair(player).remove();
+        player.teleport(new  Location(player.getWorld(), x, y, z, yaw, pitch));
+        if (getChair(player) != null){
+            getChair(player).remove();
+        }
     }
     public static Entity getChair(Player player) {
         return player.getServer().getEntity(UUID.fromString(data(player).get(NamespacedKey.minecraft("chairs.entity"), PersistentDataType.STRING)));
