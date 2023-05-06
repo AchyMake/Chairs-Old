@@ -3,10 +3,9 @@ package net.achymake.chairs;
 import net.achymake.chairs.commands.Commands;
 import net.achymake.chairs.files.Message;
 import net.achymake.chairs.listeners.Events;
+import net.achymake.chairs.settings.Settings;
 import net.achymake.chairs.version.UpdateChecker;
-import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
-import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class Chairs extends JavaPlugin {
@@ -26,11 +25,7 @@ public final class Chairs extends JavaPlugin {
         Message.sendLog("Disabled " + getName() + " " + getDescription().getVersion());
     }
     public static boolean isSitting(Player player){
-        if (player.getPersistentDataContainer().has(NamespacedKey.minecraft("chairs.sitting"),PersistentDataType.STRING)){
-            return Boolean.getBoolean(player.getPersistentDataContainer().get(NamespacedKey.minecraft("chairs.sitting"), PersistentDataType.STRING));
-        }else{
-            return false;
-        }
+        return Settings.getChair(player) != null;
     }
     public static Chairs getInstance() {
         return instance;
