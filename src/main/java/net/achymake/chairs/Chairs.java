@@ -25,7 +25,7 @@ public final class Chairs extends JavaPlugin {
         Message.sendLog("Disabled " + getName() + " " + getDescription().getVersion());
     }
     public static boolean isSitting(Player player) {
-        return Settings.getChair(player) != null;
+        return Settings.isSitting(player);
     }
     public static Chairs getInstance() {
         return instance;

@@ -117,6 +117,7 @@ public class Settings {
         data(player).set(NamespacedKey.minecraft("chairs.x"), PersistentDataType.DOUBLE, player.getLocation().getX());
         data(player).set(NamespacedKey.minecraft("chairs.y"), PersistentDataType.DOUBLE, player.getLocation().getY());
         data(player).set(NamespacedKey.minecraft("chairs.z"), PersistentDataType.DOUBLE, player.getLocation().getZ());
+        data(player).set(NamespacedKey.minecraft("chairs.sitting"), PersistentDataType.STRING, "true");
         armorStand.addPassenger(player);
     }
     public static void dismount(Player player) {
@@ -126,9 +127,13 @@ public class Settings {
         float yaw = player.getLocation().getYaw();
         float pitch = player.getLocation().getPitch();
         player.teleport(new  Location(player.getWorld(), x, y, z, yaw, pitch));
-        if (getChair(player) != null){
+        if (getChair(player) != null) {
+            data(player).set(NamespacedKey.minecraft("chairs.sitting"), PersistentDataType.STRING, "false");
             getChair(player).remove();
         }
+    }
+    public static boolean isSitting(Player player) {
+        return Boolean.parseBoolean(data(player).get(NamespacedKey.minecraft("chairs.sitting"), PersistentDataType.STRING));
     }
     public static Entity getChair(Player player) {
         return player.getServer().getEntity(UUID.fromString(data(player).get(NamespacedKey.minecraft("chairs.entity"), PersistentDataType.STRING)));

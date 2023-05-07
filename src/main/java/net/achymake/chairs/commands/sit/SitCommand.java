@@ -19,12 +19,12 @@ public class SitCommand implements CommandExecutor, TabCompleter {
             Player player = (Player) sender;
             if (args.length == 0){
                 if (player.isOnGround()) {
-                    if (!player.getLocation().add(0,-1,0).getBlock().isEmpty()){
-                        if (!Chairs.isSitting(player)){
+                    if (!player.getLocation().add(0,-1,0).getBlock().isEmpty()) {
+                        if (!Chairs.isSitting(player)) {
                             Location location = player.getLocation().getBlock().getLocation().add(0.5, -0.9, 0.5);
                             Settings.sitCommand(player, location);
                         }
-                    }else{
+                    } else {
                         Message.sendActionBar(player,"&cYou have to stand on ground");
                     }
                 } else {
