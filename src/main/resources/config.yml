@@ -1,3 +1,5 @@
 notify-update:
   #Notifies Plugin Updates
   enable: true
+setting:
+  dismount-on-damage: true

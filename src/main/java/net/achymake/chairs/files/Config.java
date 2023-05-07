@@ -9,6 +9,9 @@ import java.io.File;
 public class Config {
     private static final File file = new File(Chairs.getInstance().getDataFolder(), "config.yml");
     private static FileConfiguration config = YamlConfiguration.loadConfiguration(file);
+    public static FileConfiguration get() {
+        return config;
+    }
     public static void reload() {
         config = YamlConfiguration.loadConfiguration(file);
     }

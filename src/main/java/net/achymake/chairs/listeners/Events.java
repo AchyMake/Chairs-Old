@@ -3,6 +3,7 @@ package net.achymake.chairs.listeners;
 import net.achymake.chairs.Chairs;
 import net.achymake.chairs.listeners.connection.NotifyUpdate;
 import net.achymake.chairs.listeners.connection.QuitWhileSitting;
+import net.achymake.chairs.listeners.dismount.DamageWhileSitting;
 import net.achymake.chairs.listeners.dismount.DismountChair;
 import net.achymake.chairs.listeners.interact.carpets.ClickCarpets;
 import net.achymake.chairs.listeners.interact.slabs.ClickSlabs;
@@ -12,6 +13,7 @@ public class Events {
     public static void start(Chairs plugin){
         new NotifyUpdate(plugin);
         new QuitWhileSitting(plugin);
+        new DamageWhileSitting(plugin);
         new DismountChair(plugin);
         new ClickCarpets(plugin);
         new ClickSlabs(plugin);
