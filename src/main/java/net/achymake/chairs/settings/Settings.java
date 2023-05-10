@@ -133,7 +133,11 @@ public class Settings {
         }
     }
     public static boolean isSitting(Player player) {
-        return Boolean.parseBoolean(data(player).get(NamespacedKey.minecraft("chairs.sitting"), PersistentDataType.STRING));
+        if (data(player).has(NamespacedKey.minecraft("chairs.sitting"), PersistentDataType.STRING)) {
+            return Boolean.parseBoolean(data(player).get(NamespacedKey.minecraft("chairs.sitting"), PersistentDataType.STRING));
+        }else {
+            return false;
+        }
     }
     public static Entity getChair(Player player) {
         return player.getServer().getEntity(UUID.fromString(data(player).get(NamespacedKey.minecraft("chairs.entity"), PersistentDataType.STRING)));
