@@ -20,7 +20,10 @@ public class Mount implements Listener {
         Player player = (Player) event.getEntity();
         Settings.setSitting(player, true);
         if (event.isCancelled()) {
-            Settings.dismount(player);
+            Settings.setSitting(player, false);
+            if (Settings.getChair(player) != null) {
+                Settings.getChair(player).remove();
+            }
         }
     }
 }

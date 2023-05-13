@@ -125,7 +125,7 @@ public class Settings {
         double z = data(player).get(NamespacedKey.minecraft("chairs.z"), PersistentDataType.DOUBLE);
         float yaw = player.getLocation().getYaw();
         float pitch = player.getLocation().getPitch();
-        player.teleport(new  Location(player.getWorld(), x, y, z, yaw, pitch));
+        player.teleport(new Location(player.getWorld(), x, y, z, yaw, pitch));
         if (getChair(player) != null) {
             getChair(player).remove();
         }
