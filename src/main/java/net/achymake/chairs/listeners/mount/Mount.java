@@ -19,5 +19,8 @@ public class Mount implements Listener {
         if (!event.getMount().getType().equals(EntityType.ARMOR_STAND))return;
         Player player = (Player) event.getEntity();
         Settings.setSitting(player, true);
+        if (event.isCancelled()) {
+            Settings.dismount(player);
+        }
     }
 }
