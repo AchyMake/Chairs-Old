@@ -109,6 +109,13 @@ public class Settings {
         ArmorStand armorStand = (ArmorStand) player.getWorld().spawnEntity(location, EntityType.ARMOR_STAND);
         addPassenger(player, armorStand);
     }
+    public static void setSitting(Player player, boolean value){
+        if (value) {
+            data(player).set(NamespacedKey.minecraft("chairs.sitting"), PersistentDataType.STRING, "true");
+        } else {
+            data(player).set(NamespacedKey.minecraft("chairs.sitting"), PersistentDataType.STRING, "false");
+        }
+    }
     private static void addPassenger(Player player, ArmorStand armorStand) {
         armorStand.setVisible(false);
         armorStand.setGravity(false);
@@ -117,7 +124,6 @@ public class Settings {
         data(player).set(NamespacedKey.minecraft("chairs.x"), PersistentDataType.DOUBLE, player.getLocation().getX());
         data(player).set(NamespacedKey.minecraft("chairs.y"), PersistentDataType.DOUBLE, player.getLocation().getY());
         data(player).set(NamespacedKey.minecraft("chairs.z"), PersistentDataType.DOUBLE, player.getLocation().getZ());
-        data(player).set(NamespacedKey.minecraft("chairs.sitting"), PersistentDataType.STRING, "true");
         armorStand.addPassenger(player);
     }
     public static void dismount(Player player) {
@@ -131,6 +137,7 @@ public class Settings {
             data(player).set(NamespacedKey.minecraft("chairs.sitting"), PersistentDataType.STRING, "false");
             getChair(player).remove();
         }
+        setSitting(player, false);
     }
     public static boolean isSitting(Player player) {
         if (data(player).has(NamespacedKey.minecraft("chairs.sitting"), PersistentDataType.STRING)) {

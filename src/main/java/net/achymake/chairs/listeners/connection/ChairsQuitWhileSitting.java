@@ -8,8 +8,8 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
 
-public class QuitWhileSitting implements Listener {
-    public QuitWhileSitting(Chairs plugin) {
+public class ChairsQuitWhileSitting implements Listener {
+    public ChairsQuitWhileSitting(Chairs plugin) {
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
     @EventHandler(priority = EventPriority.NORMAL)

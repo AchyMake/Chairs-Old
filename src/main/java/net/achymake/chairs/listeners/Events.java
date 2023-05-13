@@ -1,20 +1,21 @@
 package net.achymake.chairs.listeners;
 
 import net.achymake.chairs.Chairs;
-import net.achymake.chairs.listeners.connection.NotifyUpdate;
-import net.achymake.chairs.listeners.connection.QuitWhileSitting;
+import net.achymake.chairs.listeners.connection.ChairsNotifyUpdate;
+import net.achymake.chairs.listeners.connection.ChairsQuitWhileSitting;
 import net.achymake.chairs.listeners.dismount.DamageWhileSitting;
-import net.achymake.chairs.listeners.dismount.DismountChair;
+import net.achymake.chairs.listeners.dismount.ChairsEntityDismount;
 import net.achymake.chairs.listeners.interact.carpets.ClickCarpets;
 import net.achymake.chairs.listeners.interact.slabs.ClickSlabs;
 import net.achymake.chairs.listeners.interact.stairs.*;
+import net.achymake.chairs.listeners.mount.Mount;
 
 public class Events {
     public static void start(Chairs plugin){
-        new NotifyUpdate(plugin);
-        new QuitWhileSitting(plugin);
+        new ChairsNotifyUpdate(plugin);
+        new ChairsQuitWhileSitting(plugin);
         new DamageWhileSitting(plugin);
-        new DismountChair(plugin);
+        new ChairsEntityDismount(plugin);
         new ClickCarpets(plugin);
         new ClickSlabs(plugin);
         new ClickStairsEast(plugin);
@@ -29,5 +30,6 @@ public class Events {
         new ClickStairsWest(plugin);
         new ClickStairsWestInnerLeft(plugin);
         new ClickStairsWestInnerRight(plugin);
+        new Mount(plugin);
     }
 }
