@@ -11,7 +11,7 @@ import org.bukkit.persistence.PersistentDataType;
 
 import java.util.UUID;
 
-public class Settings {
+public class ChairsSettings {
     private static PersistentDataContainer data(Entity entity) {
         return entity.getPersistentDataContainer();
     }

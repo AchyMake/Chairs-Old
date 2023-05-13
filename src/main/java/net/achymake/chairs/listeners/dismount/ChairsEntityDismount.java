@@ -1,7 +1,7 @@
 package net.achymake.chairs.listeners.dismount;
 
 import net.achymake.chairs.Chairs;
-import net.achymake.chairs.settings.Settings;
+import net.achymake.chairs.settings.ChairsSettings;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -18,6 +18,6 @@ public class ChairsEntityDismount implements Listener {
         if (!event.getEntity().getType().equals(EntityType.PLAYER))return;
         if (!event.getDismounted().getType().equals(EntityType.ARMOR_STAND))return;
         Player player = (Player) event.getEntity();
-        Settings.dismount(player);
+        ChairsSettings.dismount(player);
     }
 }

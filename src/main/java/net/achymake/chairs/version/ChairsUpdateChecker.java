@@ -1,7 +1,7 @@
 package net.achymake.chairs.version;
 
 import net.achymake.chairs.Chairs;
-import net.achymake.chairs.files.Message;
+import net.achymake.chairs.files.ChairsMessage;
 import org.bukkit.entity.Player;
 
 import java.io.IOException;
@@ -9,10 +9,10 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.Scanner;
 import java.util.function.Consumer;
-public class UpdateChecker {
+public class ChairsUpdateChecker {
     private final Chairs plugin;
     private final int resourceId;
-    public UpdateChecker(Chairs plugin, int resourceId) {
+    public ChairsUpdateChecker(Chairs plugin, int resourceId) {
         this.plugin = plugin;
         this.resourceId = resourceId;
     }
@@ -29,29 +29,29 @@ public class UpdateChecker {
                     inputStream.close();
                 }
             } catch (IOException e) {
-                Message.sendLog(e.getMessage());
+                ChairsMessage.sendLog(e.getMessage());
             }
         });
     }
     public void getUpdate() {
         if (this.plugin.getConfig().getBoolean("notify-update.enable")) {
-            (new UpdateChecker(this.plugin, this.resourceId)).getVersion((latest) -> {
+            (new ChairsUpdateChecker(this.plugin, this.resourceId)).getVersion((latest) -> {
                 if (this.plugin.getDescription().getVersion().equalsIgnoreCase(latest)) {
-                    Message.sendLog("You are using the latest version");
+                    ChairsMessage.sendLog("You are using the latest version");
                 } else {
-                    Message.sendLog("New update: " + latest);
-                    Message.sendLog("Current version: " + this.plugin.getDescription().getVersion());
+                    ChairsMessage.sendLog("New update: " + latest);
+                    ChairsMessage.sendLog("Current version: " + this.plugin.getDescription().getVersion());
                 }
             });
         }
     }
     public void sendMessage(Player player) {
         if (plugin.getConfig().getBoolean("notify-update.enable")) {
-            (new UpdateChecker(plugin, this.resourceId)).getVersion((latest) -> {
+            (new ChairsUpdateChecker(plugin, this.resourceId)).getVersion((latest) -> {
                 if (!plugin.getDescription().getVersion().equalsIgnoreCase(latest)) {
-                    Message.send(player,"&6" + plugin.getName() + " Update:");
-                    Message.send(player,"&6new release: &f" + latest);
-                    Message.send(player,"&6current: &f" + plugin.getDescription().getVersion());
+                    ChairsMessage.send(player,"&6" + plugin.getName() + " Update:");
+                    ChairsMessage.send(player,"&6new release: &f" + latest);
+                    ChairsMessage.send(player,"&6current: &f" + plugin.getDescription().getVersion());
                 }
             });
         }

@@ -7,9 +7,18 @@ import org.bukkit.configuration.file.FileConfiguration;
 import java.io.File;
 import java.io.IOException;
 
-public class Config {
-    private static final File file = new File(Chairs.getInstance().getDataFolder(), "config.yml");
-    private static final FileConfiguration config = Chairs.getInstance().getConfig();
+public class ChairsConfig {
+    private static final Chairs plugin = Chairs.getInstance();
+    private static final File file = new File(plugin.getDataFolder(), "config.yml");
+    private static final FileConfiguration config = plugin.getConfig();
+    public static void setup() {
+        if (file.exists()) {
+            reload();
+        } else {
+            plugin.getConfig().options().copyDefaults(true);
+            plugin.saveConfig();
+        }
+    }
     public static FileConfiguration get() {
         return config;
     }
@@ -19,7 +28,7 @@ public class Config {
             config.options().copyDefaults(true);
             config.save(file);
         } catch (IOException | InvalidConfigurationException e) {
-            Message.sendLog(e.getMessage());
+            ChairsMessage.sendLog(e.getMessage());
         }
     }
 }

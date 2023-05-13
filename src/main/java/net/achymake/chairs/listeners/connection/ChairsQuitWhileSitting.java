@@ -1,7 +1,7 @@
 package net.achymake.chairs.listeners.connection;
 
 import net.achymake.chairs.Chairs;
-import net.achymake.chairs.settings.Settings;
+import net.achymake.chairs.settings.ChairsSettings;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -16,6 +16,6 @@ public class ChairsQuitWhileSitting implements Listener {
     public void onQuitWhileSitting(PlayerQuitEvent event) {
         Player player = event.getPlayer();
         if (!Chairs.isSitting(player))return;
-        Settings.dismount(player);
+        ChairsSettings.dismount(player);
     }
 }

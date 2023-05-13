@@ -1,7 +1,7 @@
 package net.achymake.chairs.listeners.interact.stairs;
 
 import net.achymake.chairs.Chairs;
-import net.achymake.chairs.settings.Settings;
+import net.achymake.chairs.settings.ChairsSettings;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Tag;
@@ -16,12 +16,12 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
-public class ClickStairsEast implements Listener {
-    public ClickStairsEast(Chairs plugin) {
+public class ChairsClickStairsEastInnerRight implements Listener {
+    public ChairsClickStairsEastInnerRight(Chairs plugin) {
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
     @EventHandler(priority = EventPriority.NORMAL)
-    public void onClickEvent(PlayerInteractEvent event) {
+    public void onClickStairsEastInnerRight(PlayerInteractEvent event) {
         if (!event.getAction().equals(Action.RIGHT_CLICK_BLOCK))return;
         if (event.getClickedBlock() == null)return;
         Player player = event.getPlayer();
@@ -33,10 +33,10 @@ public class ClickStairsEast implements Listener {
         if (player.isSneaking())return;
         if (!Tag.STAIRS.isTagged(block.getType()))return;
         if (!event.getBlockFace().equals(BlockFace.UP))return;
-        if (!((Stairs) block.getBlockData()).getHalf().equals(Bisected.Half.BOTTOM))return;
+        if (!((Stairs)block.getBlockData()).getHalf().equals(Bisected.Half.BOTTOM))return;
         if (!((Stairs) block.getBlockData()).getFacing().equals(BlockFace.EAST))return;
-        if (!((Stairs) block.getBlockData()).getShape().equals(Stairs.Shape.STRAIGHT))return;
-        Location location = block.getLocation().add(0.5, -0.4, 0.5);
-        Settings.sitStairsEast(player, location);
+        if (!((Stairs) block.getBlockData()).getShape().equals(Stairs.Shape.INNER_RIGHT))return;
+        Location location = event.getClickedBlock().getLocation().add(0.5, -0.4, 0.5);
+        ChairsSettings.sitStairsEastInnerRight(player, location);
     }
 }

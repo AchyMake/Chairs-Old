@@ -1,7 +1,7 @@
 package net.achymake.chairs.listeners.interact.stairs;
 
 import net.achymake.chairs.Chairs;
-import net.achymake.chairs.settings.Settings;
+import net.achymake.chairs.settings.ChairsSettings;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Tag;
@@ -16,8 +16,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
-public class ClickStairsNorthInnerRight implements Listener {
-    public ClickStairsNorthInnerRight(Chairs plugin) {
+public class ChairsClickStairsNorthInnerRight implements Listener {
+    public ChairsClickStairsNorthInnerRight(Chairs plugin) {
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
     @EventHandler(priority = EventPriority.NORMAL)
@@ -37,6 +37,6 @@ public class ClickStairsNorthInnerRight implements Listener {
         if (!((Stairs)block.getBlockData()).getFacing().equals(BlockFace.NORTH))return;
         if (!((Stairs)block.getBlockData()).getShape().equals(Stairs.Shape.INNER_RIGHT))return;
         Location location = event.getClickedBlock().getLocation().add(0.5, -0.4, 0.5);
-        Settings.sitStairsNorthInnerRight(player, location);
+        ChairsSettings.sitStairsNorthInnerRight(player, location);
     }
 }

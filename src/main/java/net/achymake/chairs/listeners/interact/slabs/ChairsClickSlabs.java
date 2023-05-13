@@ -1,14 +1,13 @@
-package net.achymake.chairs.listeners.interact.stairs;
+package net.achymake.chairs.listeners.interact.slabs;
 
 import net.achymake.chairs.Chairs;
-import net.achymake.chairs.settings.Settings;
+import net.achymake.chairs.settings.ChairsSettings;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Tag;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
-import org.bukkit.block.data.Bisected;
-import org.bukkit.block.data.type.Stairs;
+import org.bukkit.block.data.type.Slab;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -16,8 +15,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
-public class ClickStairsNorth implements Listener {
-    public ClickStairsNorth(Chairs plugin) {
+public class ChairsClickSlabs implements Listener {
+    public ChairsClickSlabs(Chairs plugin) {
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
     @EventHandler(priority = EventPriority.NORMAL)
@@ -27,16 +26,14 @@ public class ClickStairsNorth implements Listener {
         Player player = event.getPlayer();
         Block block = event.getClickedBlock();
         if (Chairs.isSitting(player))return;
-        if (!player.hasPermission("chairs.sit.stairs"))return;
+        if (!player.hasPermission("chairs.sit.slabs"))return;
+        if (!event.getBlockFace().equals(BlockFace.UP))return;
+        if (!Tag.SLABS.isTagged(block.getType()))return;
+        if (!((Slab) block.getBlockData()).getType().equals(Slab.Type.BOTTOM))return;
         if (!player.getInventory().getItemInMainHand().getType().equals(Material.AIR))return;
         if (!player.getInventory().getItemInOffHand().getType().equals(Material.AIR))return;
         if (player.isSneaking())return;
-        if (!Tag.STAIRS.isTagged(block.getType()))return;
-        if (!event.getBlockFace().equals(BlockFace.UP))return;
-        if (!((Stairs)block.getBlockData()).getHalf().equals(Bisected.Half.BOTTOM))return;
-        if (!((Stairs)block.getBlockData()).getFacing().equals(BlockFace.NORTH))return;
-        if (!((Stairs)block.getBlockData()).getShape().equals(Stairs.Shape.STRAIGHT))return;
-        Location location = event.getClickedBlock().getLocation().add(0.5, -0.4, 0.5);
-        Settings.sitStairsNorth(player, location);
+        Location location = event.getClickedBlock().getLocation();
+        ChairsSettings.sitSlabs(player, location);
     }
 }
