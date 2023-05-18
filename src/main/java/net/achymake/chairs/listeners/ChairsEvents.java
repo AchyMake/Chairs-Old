@@ -6,6 +6,8 @@ import net.achymake.chairs.listeners.connection.ChairsQuitWhileSitting;
 import net.achymake.chairs.listeners.dismount.ChairsEntityDamage;
 import net.achymake.chairs.listeners.dismount.ChairsEntityDismount;
 import net.achymake.chairs.listeners.interact.carpets.ChairsClickCarpets;
+import net.achymake.chairs.listeners.interact.hayblock.ChairsClickHayBlock;
+import net.achymake.chairs.listeners.interact.scaffolding.ChairsClickScaffolding;
 import net.achymake.chairs.listeners.interact.slabs.ChairsClickSlabs;
 import net.achymake.chairs.listeners.interact.stairs.*;
 import net.achymake.chairs.listeners.mount.ChairsMount;
@@ -17,6 +19,8 @@ public class ChairsEvents {
         new ChairsEntityDamage(plugin);
         new ChairsEntityDismount(plugin);
         new ChairsClickCarpets(plugin);
+        new ChairsClickHayBlock(plugin);
+        new ChairsClickScaffolding(plugin);
         new ChairsClickSlabs(plugin);
         new ChairsClickStairsEast(plugin);
         new ChairsClickStairsEastInnerLeft(plugin);

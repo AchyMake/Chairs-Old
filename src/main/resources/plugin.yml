@@ -28,9 +28,17 @@ permissions:
     default: op
     children:
       - chairs.sit.carpets
+      - chairs.sit.hay_block
+      - chairs.sit.scaffolding
       - chairs.sit.slabs
       - chairs.sit.stairs
   chairs.sit.carpets:
+    description: allows to sit on carpets
+    default: op
+  chairs.sit.hay_block:
+    description: allows to sit on carpets
+    default: op
+  chairs.sit.scaffolding:
     description: allows to sit on carpets
     default: op
   chairs.sit.slabs:
