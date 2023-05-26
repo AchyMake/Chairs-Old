@@ -73,7 +73,6 @@ public final class Chairs extends JavaPlugin {
         if (configFile.exists()) {
             try {
                 getConfig().load(configFile);
-                getConfig().options().copyDefaults(true);
                 saveConfig();
             } catch (IOException | InvalidConfigurationException e) {
                 throw new RuntimeException(e);
