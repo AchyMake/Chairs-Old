@@ -6,7 +6,7 @@
 
     <groupId>net.achymake</groupId>
     <artifactId>Chairs</artifactId>
-    <version>1.11.2</version>
+    <version>1.11.3</version>
     <packaging>jar</packaging>
 
     <name>Chairs</name>
