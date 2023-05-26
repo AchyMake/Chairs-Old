@@ -35,25 +35,21 @@ public class UpdateChecker {
         });
     }
     public void getUpdate() {
-        if (chairs.getConfig().getBoolean("notify-update.enable")) {
-            (new UpdateChecker(chairs, resourceId)).getVersion((latest) -> {
-                if (chairs.getDescription().getVersion().equalsIgnoreCase(latest)) {
-                    Chairs.getMessage().sendLog("You are using the latest version");
-                } else {
-                    message.sendLog("New update: " + latest);
-                    message.sendLog("Current version: " + chairs.getDescription().getVersion());
-                }
-            });
-        }
+        (new UpdateChecker(chairs, resourceId)).getVersion((latest) -> {
+            if (chairs.getDescription().getVersion().equalsIgnoreCase(latest)) {
+                message.sendLog("You are using the latest version");
+            } else {
+                message.sendLog("New update: " + latest);
+                message.sendLog("Current version: " + chairs.getDescription().getVersion());
+            }
+        });
     }
     public void sendMessage(Player player) {
-        if (chairs.getConfig().getBoolean("notify-update.enable")) {
-            (new UpdateChecker(chairs, resourceId)).getVersion((latest) -> {
-                if (!chairs.getDescription().getVersion().equalsIgnoreCase(latest)) {
-                    message.send(player,"&6" + chairs.getName() + " Update:&f " + latest);
-                    message.send(player,"&6current: &f" + chairs.getDescription().getVersion());
-                }
-            });
-        }
+        (new UpdateChecker(chairs, resourceId)).getVersion((latest) -> {
+            if (!chairs.getDescription().getVersion().equalsIgnoreCase(latest)) {
+                message.send(player,"&6" + chairs.getName() + " Update:&f " + latest);
+                message.send(player,"&6current: &f" + chairs.getDescription().getVersion());
+            }
+        });
     }
 }

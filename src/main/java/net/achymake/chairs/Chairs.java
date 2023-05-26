@@ -29,7 +29,6 @@ public final class Chairs extends JavaPlugin {
     private static Message message;
     private static ChairData chairData;
     private static Metrics metrics;
-    private final File configFile = new File(getDataFolder(), "config.yml");
     @Override
     public void onEnable() {
         instance = this;
@@ -61,8 +60,10 @@ public final class Chairs extends JavaPlugin {
         new StairsWestInnerRight(this);
         new EntityMount(this);
         new PlayerTeleport(this);
-        new UpdateChecker(this, 104881).getUpdate();
         message.sendLog("Enabled " + getName() + " " + getDescription().getVersion());
+        if (getConfig().getBoolean("notify-update.enable")) {
+            new UpdateChecker(this, 104881).getUpdate();
+        }
     }
     @Override
     public void onDisable() {
@@ -70,9 +71,9 @@ public final class Chairs extends JavaPlugin {
         message.sendLog("Disabled " + getName() + " " + getDescription().getVersion());
     }
     public void reload() {
-        if (configFile.exists()) {
+        if (new File(getDataFolder(), "config.yml").exists()) {
             try {
-                getConfig().load(configFile);
+                getConfig().load(new File(getDataFolder(), "config.yml"));
                 saveConfig();
             } catch (IOException | InvalidConfigurationException e) {
                 throw new RuntimeException(e);
@@ -82,9 +83,6 @@ public final class Chairs extends JavaPlugin {
             saveConfig();
         }
     }
-    public Metrics getMetrics() {
-        return metrics;
-    }
     public static boolean isSitting(Player player) {
         return chairData.hasChair(player);
     }
@@ -93,6 +91,9 @@ public final class Chairs extends JavaPlugin {
     }
     public static ChairData getChairData() {
         return chairData;
+    }
+    public Metrics getMetrics() {
+        return metrics;
     }
     public static Chairs getInstance() {
         return instance;
