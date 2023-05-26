@@ -1,23 +1,28 @@
 package net.achymake.chairs.listeners.interact.carpets;
 
 import net.achymake.chairs.Chairs;
-import net.achymake.chairs.settings.ChairsSettings;
+import net.achymake.chairs.files.ChairData;
+import org.bukkit.Location;
 import org.bukkit.Tag;
 import org.bukkit.block.BlockFace;
+import org.bukkit.entity.ArmorStand;
+import org.bukkit.entity.EntityType;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
-public class ChairsClickCarpets implements Listener {
-    public ChairsClickCarpets(Chairs plugin) {
-        plugin.getServer().getPluginManager().registerEvents(this, plugin);
+public class Carpets implements Listener {
+    private final ChairData chairData = Chairs.getChairData();
+    public Carpets(Chairs chairs) {
+        chairs.getServer().getPluginManager().registerEvents(this, chairs);
     }
     @EventHandler(priority = EventPriority.NORMAL)
     public void onClickEvent(PlayerInteractEvent event) {
         if (!event.getAction().equals(Action.RIGHT_CLICK_BLOCK))return;
         if (event.getClickedBlock() == null)return;
+        if (Chairs.isSitting(event.getPlayer()))return;
         if (!Tag.CARPETS.isTagged(event.getClickedBlock().getType()))return;
         if (!event.getPlayer().hasPermission("chairs.sit.carpets"))return;
         if (!event.getClickedBlock().getLocation().add(0,1,0).getBlock().getType().isAir())return;
@@ -25,8 +30,15 @@ public class ChairsClickCarpets implements Listener {
         if (!event.getPlayer().getInventory().getItemInMainHand().getType().isAir())return;
         if (!event.getPlayer().getInventory().getItemInOffHand().getType().isAir())return;
         if (event.getPlayer().isSneaking())return;
-        if (Chairs.isSitting(event.getPlayer()))return;
         if (!event.getPlayer().isOnGround())return;
-        ChairsSettings.sitCarpet(event.getPlayer(), event.getClickedBlock().getLocation());
+        Location location = event.getClickedBlock().getLocation().add(0.5,-0.95,0.5);
+        location.setYaw(event.getPlayer().getLocation().getYaw() + 180.0F);
+        location.setPitch(0.0F);
+        ArmorStand armorStand = (ArmorStand) event.getPlayer().getWorld().spawnEntity(location, EntityType.ARMOR_STAND);
+        chairData.setChair(event.getPlayer(), armorStand);
+        armorStand.setVisible(false);
+        armorStand.setGravity(false);
+        armorStand.setSmall(true);
+        armorStand.addPassenger(event.getPlayer());
     }
 }

@@ -1,31 +1,97 @@
 package net.achymake.chairs;
 
-import net.achymake.chairs.commands.ChairsCommands;
-import net.achymake.chairs.files.ChairsConfig;
-import net.achymake.chairs.files.ChairsMessage;
-import net.achymake.chairs.listeners.ChairsEvents;
-import net.achymake.chairs.settings.ChairsSettings;
-import net.achymake.chairs.version.ChairsUpdateChecker;
+import net.achymake.chairs.api.Metrics;
+import net.achymake.chairs.commands.ChairsCommand;
+import net.achymake.chairs.commands.SitCommand;
+import net.achymake.chairs.files.Message;
+import net.achymake.chairs.files.ChairData;
+import net.achymake.chairs.listeners.connection.NotifyUpdate;
+import net.achymake.chairs.listeners.connection.QuitWhileSitting;
+import net.achymake.chairs.listeners.dismount.EntityDamage;
+import net.achymake.chairs.listeners.dismount.EntityDismount;
+import net.achymake.chairs.listeners.interact.carpets.Carpets;
+import net.achymake.chairs.listeners.interact.hayblock.HarBlock;
+import net.achymake.chairs.listeners.interact.scaffolding.Scaffolding;
+import net.achymake.chairs.listeners.interact.slabs.Slabs;
+import net.achymake.chairs.listeners.interact.stairs.*;
+import net.achymake.chairs.listeners.mount.EntityMount;
+import net.achymake.chairs.version.UpdateChecker;
+import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.File;
+import java.io.IOException;
+
 public final class Chairs extends JavaPlugin {
     private static Chairs instance;
+    private static Message message;
+    private static ChairData chairData;
+    private static Metrics metrics;
+    private final File configFile = new File(getDataFolder(), "config.yml");
     @Override
     public void onEnable() {
         instance = this;
-        ChairsConfig.setup();
-        ChairsEvents.start(this);
-        ChairsCommands.start(this);
-        new ChairsUpdateChecker(this,104881).getUpdate();
-        ChairsMessage.sendLog("Enabled " + getName() + " " + getDescription().getVersion());
+        message = new Message(this);
+        chairData = new ChairData(this);
+        metrics = new Metrics(this, 18568);
+        reload();
+        getCommand("chairs").setExecutor(new ChairsCommand());
+        getCommand("sit").setExecutor(new SitCommand());
+        new NotifyUpdate(this);
+        new QuitWhileSitting(this);
+        new EntityDamage(this);
+        new EntityDismount(this);
+        new Carpets(this);
+        new HarBlock(this);
+        new Scaffolding(this);
+        new Slabs(this);
+        new StairsEast(this);
+        new StairsEastInnerLeft(this);
+        new StairsEastInnerRight(this);
+        new StairsNorth(this);
+        new StairsNorthInnerLeft(this);
+        new StairsNorthInnerRight(this);
+        new StairsSouth(this);
+        new StairsSouthInnerLeft(this);
+        new StairsSouthInnerRight(this);
+        new StairsWest(this);
+        new StairsWestInnerLeft(this);
+        new StairsWestInnerRight(this);
+        new EntityMount(this);
+        new UpdateChecker(this, 104881).getUpdate();
+        message.sendLog("Enabled " + getName() + " " + getDescription().getVersion());
     }
     @Override
     public void onDisable() {
-        ChairsMessage.sendLog("Disabled " + getName() + " " + getDescription().getVersion());
+        metrics.shutdown();
+        message.sendLog("Disabled " + getName() + " " + getDescription().getVersion());
+    }
+    public void reload() {
+        if (configFile.exists()) {
+            try {
+                getConfig().load(configFile);
+                getConfig().options().copyDefaults(true);
+                saveConfig();
+            } catch (IOException | InvalidConfigurationException e) {
+                throw new RuntimeException(e);
+            }
+        } else {
+            getConfig().options().copyDefaults(true);
+            saveConfig();
+        }
+    }
+    public Metrics getMetrics() {
+        return metrics;
     }
     public static boolean isSitting(Player player) {
-        return ChairsSettings.isSitting(player);
+        return chairData.hasChair(player);
+    }
+    public static Message getMessage() {
+        return message;
+    }
+    public static ChairData getChairData() {
+        return chairData;
     }
     public static Chairs getInstance() {
         return instance;

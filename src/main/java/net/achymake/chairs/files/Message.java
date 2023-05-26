@@ -7,17 +7,21 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class ChairsMessage {
-    public static void sendActionBar(Player player, String message) {
+public class Message {
+    private final Chairs chairs;
+    public Message(Chairs chairs) {
+        this.chairs = chairs;
+    }
+    public void sendActionBar(Player player, String message) {
         player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(color(message)));
     }
-    public static void send(CommandSender sender, String message) {
+    public void send(CommandSender sender, String message) {
         sender.sendMessage(color(message));
     }
-    public static void sendLog(String message) {
+    public void sendLog(String message) {
         Chairs.getInstance().getServer().getConsoleSender().sendMessage("[" + Chairs.getInstance().getName() + "] " + message);
     }
-    public static String color(String message){
+    public String color(String message){
         return ChatColor.translateAlternateColorCodes('&', message);
     }
 }

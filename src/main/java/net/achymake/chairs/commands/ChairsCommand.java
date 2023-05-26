@@ -1,8 +1,7 @@
-package net.achymake.chairs.commands.main;
+package net.achymake.chairs.commands;
 
 import net.achymake.chairs.Chairs;
-import net.achymake.chairs.files.ChairsConfig;
-import net.achymake.chairs.files.ChairsMessage;
+import net.achymake.chairs.files.Message;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -12,15 +11,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ChairsCommand implements CommandExecutor, TabCompleter {
+    private final Chairs chairs = Chairs.getInstance();
+    private final Message message = Chairs.getMessage();
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (args.length == 0){
-            ChairsMessage.send(sender, "&6" + Chairs.getInstance().getName() + "&f " + Chairs.getInstance().getDescription().getVersion());
+        if (args.length == 0) {
+            message.send(sender, "&6" + Chairs.getInstance().getName() + "&f " + Chairs.getInstance().getDescription().getVersion());
         }
-        if (args.length == 1){
+        if (args.length == 1) {
             if (args[0].equalsIgnoreCase("reload")) {
-                ChairsConfig.reload();
-                ChairsMessage.send(sender, "&6Chairs reloaded");
+                chairs.reload();
+                message.send(sender, "&6Chairs reloaded");
             }
         }
         return true;

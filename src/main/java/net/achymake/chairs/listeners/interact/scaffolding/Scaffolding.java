@@ -1,18 +1,22 @@
 package net.achymake.chairs.listeners.interact.scaffolding;
 
 import net.achymake.chairs.Chairs;
-import net.achymake.chairs.settings.ChairsSettings;
+import net.achymake.chairs.files.ChairData;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
+import org.bukkit.entity.ArmorStand;
+import org.bukkit.entity.EntityType;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
-public class ChairsClickScaffolding implements Listener {
-    public ChairsClickScaffolding(Chairs plugin) {
-        plugin.getServer().getPluginManager().registerEvents(this, plugin);
+public class Scaffolding implements Listener {
+    private final ChairData chairData = Chairs.getChairData();
+    public Scaffolding(Chairs chairs) {
+        chairs.getServer().getPluginManager().registerEvents(this, chairs);
     }
     @EventHandler(priority = EventPriority.NORMAL)
     public void onChairsClickScaffolding(PlayerInteractEvent event) {
@@ -27,6 +31,14 @@ public class ChairsClickScaffolding implements Listener {
         if (event.getPlayer().isSneaking())return;
         if (Chairs.isSitting(event.getPlayer()))return;
         if (!event.getPlayer().isOnGround())return;
-        ChairsSettings.sitCarpet(event.getPlayer(), event.getClickedBlock().getLocation().add(0,0.90,0));
+        Location location = event.getClickedBlock().getLocation().add(0.5,0.0,0.5);
+        location.setYaw(event.getPlayer().getLocation().getYaw() + 180.0F);
+        location.setPitch(0.0F);
+        ArmorStand armorStand = (ArmorStand) event.getPlayer().getWorld().spawnEntity(location, EntityType.ARMOR_STAND);
+        chairData.setChair(event.getPlayer(), armorStand);
+        armorStand.setVisible(false);
+        armorStand.setGravity(false);
+        armorStand.setSmall(true);
+        armorStand.addPassenger(event.getPlayer());
     }
 }

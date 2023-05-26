@@ -1,24 +1,27 @@
 package net.achymake.chairs.listeners.interact.stairs;
 
 import net.achymake.chairs.Chairs;
-import net.achymake.chairs.settings.ChairsSettings;
+import net.achymake.chairs.files.ChairData;
+import org.bukkit.Location;
 import org.bukkit.Tag;
-import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.Bisected;
 import org.bukkit.block.data.type.Stairs;
+import org.bukkit.entity.ArmorStand;
+import org.bukkit.entity.EntityType;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
-public class ChairsClickStairsEastInnerLeft implements Listener {
-    public ChairsClickStairsEastInnerLeft(Chairs plugin) {
-        plugin.getServer().getPluginManager().registerEvents(this, plugin);
+public class StairsNorth implements Listener {
+    private final ChairData chairData = Chairs.getChairData();
+    public StairsNorth(Chairs chairs) {
+        chairs.getServer().getPluginManager().registerEvents(this, chairs);
     }
     @EventHandler(priority = EventPriority.NORMAL)
-    public void onClickStairsEastInnerLeft(PlayerInteractEvent event) {
+    public void onClickEvent(PlayerInteractEvent event) {
         if (!event.getAction().equals(Action.RIGHT_CLICK_BLOCK))return;
         if (event.getClickedBlock() == null)return;
         if (!Tag.STAIRS.isTagged(event.getClickedBlock().getType()))return;
@@ -26,13 +29,21 @@ public class ChairsClickStairsEastInnerLeft implements Listener {
         if (!event.getClickedBlock().getLocation().add(0,1,0).getBlock().getType().isAir())return;
         if (!event.getBlockFace().equals(BlockFace.UP))return;
         if (!((Stairs) event.getClickedBlock().getBlockData()).getHalf().equals(Bisected.Half.BOTTOM))return;
-        if (!((Stairs) event.getClickedBlock().getBlockData()).getFacing().equals(BlockFace.EAST))return;
-        if (!((Stairs) event.getClickedBlock().getBlockData()).getShape().equals(Stairs.Shape.INNER_LEFT))return;
+        if (!((Stairs) event.getClickedBlock().getBlockData()).getFacing().equals(BlockFace.NORTH))return;
+        if (!((Stairs) event.getClickedBlock().getBlockData()).getShape().equals(Stairs.Shape.STRAIGHT))return;
         if (!event.getPlayer().getInventory().getItemInMainHand().getType().isAir())return;
         if (!event.getPlayer().getInventory().getItemInOffHand().getType().isAir())return;
         if (event.getPlayer().isSneaking())return;
         if (Chairs.isSitting(event.getPlayer()))return;
         if (!event.getPlayer().isOnGround())return;
-        ChairsSettings.sitStairsEastInnerLeft(event.getPlayer(), event.getClickedBlock().getLocation().add(0.5, -0.4, 0.5));
+        Location location = event.getClickedBlock().getLocation().add(0.5,-0.4,0.5);
+        location.setYaw(0.0F);
+        location.setPitch(0.0F);
+        ArmorStand armorStand = (ArmorStand) event.getPlayer().getWorld().spawnEntity(location, EntityType.ARMOR_STAND);
+        chairData.setChair(event.getPlayer(), armorStand);
+        armorStand.setVisible(false);
+        armorStand.setGravity(false);
+        armorStand.setSmall(true);
+        armorStand.addPassenger(event.getPlayer());
     }
 }
