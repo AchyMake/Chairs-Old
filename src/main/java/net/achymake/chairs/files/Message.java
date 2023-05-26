@@ -19,7 +19,7 @@ public class Message {
         sender.sendMessage(color(message));
     }
     public void sendLog(String message) {
-        Chairs.getInstance().getServer().getConsoleSender().sendMessage("[" + Chairs.getInstance().getName() + "] " + message);
+        chairs.getServer().getConsoleSender().sendMessage("[" + chairs.getName() + "] " + message);
     }
     public String color(String message){
         return ChatColor.translateAlternateColorCodes('&', message);

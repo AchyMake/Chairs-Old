@@ -16,7 +16,7 @@ public class ChairsCommand implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (args.length == 0) {
-            message.send(sender, "&6" + Chairs.getInstance().getName() + "&f " + Chairs.getInstance().getDescription().getVersion());
+            message.send(sender, "&6" + chairs.getName() + "&f " + chairs.getDescription().getVersion());
         }
         if (args.length == 1) {
             if (args[0].equalsIgnoreCase("reload")) {

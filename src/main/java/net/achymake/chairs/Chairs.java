@@ -61,9 +61,7 @@ public final class Chairs extends JavaPlugin {
         new EntityMount(this);
         new PlayerTeleport(this);
         message.sendLog("Enabled " + getName() + " " + getDescription().getVersion());
-        if (getConfig().getBoolean("notify-update.enable")) {
-            new UpdateChecker(this, 104881).getUpdate();
-        }
+        new UpdateChecker(this, 104881).getUpdate();
     }
     @Override
     public void onDisable() {

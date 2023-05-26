@@ -14,7 +14,6 @@ public class PlayerJoin implements Listener {
     @EventHandler(priority = EventPriority.NORMAL)
     public void onPlayerJoin(PlayerJoinEvent event) {
         if (!event.getPlayer().hasPermission("chairs.command.reload"))return;
-        if (!Chairs.getInstance().getConfig().getBoolean("notify-update.enable"))return;
         new UpdateChecker(Chairs.getInstance(),104881).sendMessage(event.getPlayer());
     }
 }
