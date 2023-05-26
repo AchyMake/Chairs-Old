@@ -5,7 +5,6 @@ import net.achymake.chairs.commands.ChairsCommand;
 import net.achymake.chairs.commands.SitCommand;
 import net.achymake.chairs.files.Message;
 import net.achymake.chairs.files.ChairData;
-import net.achymake.chairs.listeners.chat.PlayerCommandPreprocess;
 import net.achymake.chairs.listeners.connection.PlayerJoin;
 import net.achymake.chairs.listeners.connection.PlayerQuit;
 import net.achymake.chairs.listeners.dismount.EntityDamage;
@@ -16,6 +15,7 @@ import net.achymake.chairs.listeners.interact.scaffolding.Scaffolding;
 import net.achymake.chairs.listeners.interact.slabs.Slabs;
 import net.achymake.chairs.listeners.interact.stairs.*;
 import net.achymake.chairs.listeners.mount.EntityMount;
+import net.achymake.chairs.listeners.teleport.PlayerTeleport;
 import net.achymake.chairs.version.UpdateChecker;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.entity.Player;
@@ -39,7 +39,6 @@ public final class Chairs extends JavaPlugin {
         reload();
         getCommand("chairs").setExecutor(new ChairsCommand());
         getCommand("sit").setExecutor(new SitCommand());
-        new PlayerCommandPreprocess(this);
         new PlayerJoin(this);
         new PlayerQuit(this);
         new EntityDamage(this);
@@ -61,6 +60,7 @@ public final class Chairs extends JavaPlugin {
         new StairsWestInnerLeft(this);
         new StairsWestInnerRight(this);
         new EntityMount(this);
+        new PlayerTeleport(this);
         new UpdateChecker(this, 104881).getUpdate();
         message.sendLog("Enabled " + getName() + " " + getDescription().getVersion());
     }
