@@ -16,7 +16,7 @@ public class EntityMount implements Listener {
         chairs.getServer().getPluginManager().registerEvents(this, chairs);
     }
     @EventHandler(priority = EventPriority.NORMAL)
-    public void onChairsMount(EntityMountEvent event) {
+    public void onEntityMount(EntityMountEvent event) {
         if (!event.getEntity().getType().equals(EntityType.PLAYER))return;
         if (!event.getMount().getType().equals(EntityType.ARMOR_STAND))return;
         Player player = (Player) event.getEntity();

@@ -15,7 +15,7 @@ public class EntityDismount implements Listener {
         chairs.getServer().getPluginManager().registerEvents(this, chairs);
     }
     @EventHandler(priority = EventPriority.NORMAL)
-    public void onChairsEntityDismount (EntityDismountEvent event) {
+    public void onEntityDismount(EntityDismountEvent event) {
         if (!event.getEntity().getType().equals(EntityType.PLAYER))return;
         if (!event.getDismounted().getType().equals(EntityType.ARMOR_STAND))return;
         chairData.dismount((Player) event.getEntity());

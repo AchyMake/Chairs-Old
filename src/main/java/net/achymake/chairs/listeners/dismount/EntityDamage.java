@@ -17,7 +17,7 @@ public class EntityDamage implements Listener {
         chairs.getServer().getPluginManager().registerEvents(this, chairs);
     }
     @EventHandler(priority = EventPriority.NORMAL)
-    public void onChairsEntityDamage(EntityDamageEvent event) {
+    public void onEntityDamage(EntityDamageEvent event) {
         if (!event.getEntity().getType().equals(EntityType.PLAYER))return;
         if (!chairData.hasChair((Player) event.getEntity()))return;
         if (!config.getBoolean("setting.dismount-on-damage"))return;

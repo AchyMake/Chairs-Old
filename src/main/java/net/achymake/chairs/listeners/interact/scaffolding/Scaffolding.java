@@ -19,7 +19,7 @@ public class Scaffolding implements Listener {
         chairs.getServer().getPluginManager().registerEvents(this, chairs);
     }
     @EventHandler(priority = EventPriority.NORMAL)
-    public void onChairsClickScaffolding(PlayerInteractEvent event) {
+    public void onScaffolding(PlayerInteractEvent event) {
         if (!event.getAction().equals(Action.RIGHT_CLICK_BLOCK))return;
         if (event.getClickedBlock() == null)return;
         if (!event.getClickedBlock().getType().equals(Material.SCAFFOLDING))return;

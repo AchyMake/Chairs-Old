@@ -19,7 +19,7 @@ public class Carpets implements Listener {
         chairs.getServer().getPluginManager().registerEvents(this, chairs);
     }
     @EventHandler(priority = EventPriority.NORMAL)
-    public void onClickEvent(PlayerInteractEvent event) {
+    public void onCarpets(PlayerInteractEvent event) {
         if (!event.getAction().equals(Action.RIGHT_CLICK_BLOCK))return;
         if (event.getClickedBlock() == null)return;
         if (Chairs.isSitting(event.getPlayer()))return;

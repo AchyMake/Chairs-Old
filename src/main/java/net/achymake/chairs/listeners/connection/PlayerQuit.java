@@ -7,13 +7,13 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
 
-public class QuitWhileSitting implements Listener {
+public class PlayerQuit implements Listener {
     private final ChairData chairData = Chairs.getChairData();
-    public QuitWhileSitting(Chairs chairs) {
+    public PlayerQuit(Chairs chairs) {
         chairs.getServer().getPluginManager().registerEvents(this, chairs);
     }
     @EventHandler(priority = EventPriority.NORMAL)
-    public void onQuitWhileSitting(PlayerQuitEvent event) {
+    public void onPlayerQuit(PlayerQuitEvent event) {
         if (!chairData.hasChair(event.getPlayer()))return;
         chairData.dismount(event.getPlayer());
     }

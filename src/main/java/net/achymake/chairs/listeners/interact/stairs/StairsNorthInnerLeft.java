@@ -21,7 +21,7 @@ public class StairsNorthInnerLeft implements Listener {
         chairs.getServer().getPluginManager().registerEvents(this, chairs);
     }
     @EventHandler(priority = EventPriority.NORMAL)
-    public void onClickStairsNorthInnerLeft(PlayerInteractEvent event) {
+    public void onStairsNorthInnerLeft(PlayerInteractEvent event) {
         if (!event.getAction().equals(Action.RIGHT_CLICK_BLOCK))return;
         if (event.getClickedBlock() == null)return;
         if (!Tag.STAIRS.isTagged(event.getClickedBlock().getType()))return;
