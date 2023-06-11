@@ -1,6 +1,5 @@
 package net.achymake.chairs;
 
-import net.achymake.chairs.api.Metrics;
 import net.achymake.chairs.commands.ChairsCommand;
 import net.achymake.chairs.commands.SitCommand;
 import net.achymake.chairs.files.Message;
@@ -38,16 +37,11 @@ public final class Chairs extends JavaPlugin {
     public static ChairData getChairData() {
         return chairData;
     }
-    private static Metrics metrics;
-    public Metrics getMetrics() {
-        return metrics;
-    }
     @Override
     public void onEnable() {
         instance = this;
         message = new Message(this);
         chairData = new ChairData(this);
-        metrics = new Metrics(this, 18568);
         reload();
         getCommand("chairs").setExecutor(new ChairsCommand());
         getCommand("sit").setExecutor(new SitCommand());
@@ -78,7 +72,6 @@ public final class Chairs extends JavaPlugin {
     }
     @Override
     public void onDisable() {
-        metrics.shutdown();
         message.sendLog(Level.INFO, "Disabled " + getName() + " " + getDescription().getVersion());
     }
     public void reload() {
