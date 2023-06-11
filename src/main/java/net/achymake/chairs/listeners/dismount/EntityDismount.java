@@ -10,7 +10,9 @@ import org.bukkit.event.Listener;
 import org.spigotmc.event.entity.EntityDismountEvent;
 
 public class EntityDismount implements Listener {
-    private final ChairData chairData = Chairs.getChairData();
+    private ChairData getChairData() {
+        return Chairs.getChairData();
+    }
     public EntityDismount(Chairs chairs) {
         chairs.getServer().getPluginManager().registerEvents(this, chairs);
     }
@@ -18,6 +20,6 @@ public class EntityDismount implements Listener {
     public void onEntityDismount(EntityDismountEvent event) {
         if (!event.getEntity().getType().equals(EntityType.PLAYER))return;
         if (!event.getDismounted().getType().equals(EntityType.ARMOR_STAND))return;
-        chairData.dismount((Player) event.getEntity());
+        getChairData().dismount((Player) event.getEntity());
     }
 }

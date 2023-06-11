@@ -11,7 +11,9 @@ import org.bukkit.event.Listener;
 import org.spigotmc.event.entity.EntityMountEvent;
 
 public class EntityMount implements Listener {
-    private final ChairData chairData = Chairs.getChairData();
+    private ChairData getChairData() {
+        return Chairs.getChairData();
+    }
     public EntityMount(Chairs chairs) {
         chairs.getServer().getPluginManager().registerEvents(this, chairs);
     }
@@ -20,9 +22,9 @@ public class EntityMount implements Listener {
         if (!event.getEntity().getType().equals(EntityType.PLAYER))return;
         if (!event.getMount().getType().equals(EntityType.ARMOR_STAND))return;
         Player player = (Player) event.getEntity();
-        chairData.setChair((Player) event.getEntity(), (ArmorStand) event.getMount());
+        getChairData().setChair((Player) event.getEntity(), (ArmorStand) event.getMount());
         if (event.isCancelled()) {
-            chairData.dismount(player);
+            getChairData().dismount(player);
         }
     }
 }

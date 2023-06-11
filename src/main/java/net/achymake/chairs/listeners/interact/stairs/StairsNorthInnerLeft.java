@@ -16,7 +16,9 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 public class StairsNorthInnerLeft implements Listener {
-    private final ChairData chairData = Chairs.getChairData();
+    private ChairData getChairData() {
+        return Chairs.getChairData();
+    }
     public StairsNorthInnerLeft(Chairs chairs) {
         chairs.getServer().getPluginManager().registerEvents(this, chairs);
     }
@@ -40,7 +42,7 @@ public class StairsNorthInnerLeft implements Listener {
         location.setYaw(-65.0F);
         location.setPitch(0.0F);
         ArmorStand armorStand = (ArmorStand) event.getPlayer().getWorld().spawnEntity(location, EntityType.ARMOR_STAND);
-        chairData.setChair(event.getPlayer(), armorStand);
+        getChairData().setChair(event.getPlayer(), armorStand);
         armorStand.setVisible(false);
         armorStand.setGravity(false);
         armorStand.setSmall(true);

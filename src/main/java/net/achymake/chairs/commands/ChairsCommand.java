@@ -11,17 +11,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ChairsCommand implements CommandExecutor, TabCompleter {
-    private final Chairs chairs = Chairs.getInstance();
-    private final Message message = Chairs.getMessage();
+    private Chairs getPlugin() {
+        return Chairs.getInstance();
+    }
+    private Message getMessage() {
+        return Chairs.getMessage();
+    }
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (args.length == 0) {
-            message.send(sender, "&6" + chairs.getName() + "&f " + chairs.getDescription().getVersion());
+            getMessage().send(sender, "&6" + getPlugin().getName() + "&f " + getPlugin().getDescription().getVersion());
         }
         if (args.length == 1) {
             if (args[0].equalsIgnoreCase("reload")) {
-                chairs.reload();
-                message.send(sender, "&6Chairs reloaded");
+                getPlugin().reload();
+                getMessage().send(sender, "&6Chairs reloaded");
             }
         }
         return true;

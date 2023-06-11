@@ -14,7 +14,9 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 public class HarBlock implements Listener {
-    private final ChairData chairData = Chairs.getChairData();
+    private ChairData getChairData() {
+        return Chairs.getChairData();
+    }
     public HarBlock(Chairs chairs) {
         chairs.getServer().getPluginManager().registerEvents(this, chairs);
     }
@@ -35,7 +37,7 @@ public class HarBlock implements Listener {
         location.setYaw(event.getPlayer().getLocation().getYaw() + 180.0F);
         location.setPitch(0.0F);
         ArmorStand armorStand = (ArmorStand) event.getPlayer().getWorld().spawnEntity(location, EntityType.ARMOR_STAND);
-        chairData.setChair(event.getPlayer(), armorStand);
+        getChairData().setChair(event.getPlayer(), armorStand);
         armorStand.setVisible(false);
         armorStand.setGravity(false);
         armorStand.setSmall(true);

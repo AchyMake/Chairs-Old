@@ -23,12 +23,25 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.logging.Level;
 
 public final class Chairs extends JavaPlugin {
     private static Chairs instance;
+    public static Chairs getInstance() {
+        return instance;
+    }
     private static Message message;
+    public static Message getMessage() {
+        return message;
+    }
     private static ChairData chairData;
+    public static ChairData getChairData() {
+        return chairData;
+    }
     private static Metrics metrics;
+    public Metrics getMetrics() {
+        return metrics;
+    }
     @Override
     public void onEnable() {
         instance = this;
@@ -60,13 +73,13 @@ public final class Chairs extends JavaPlugin {
         new StairsWestInnerRight(this);
         new EntityMount(this);
         new PlayerTeleport(this);
-        message.sendLog("Enabled " + getName() + " " + getDescription().getVersion());
+        message.sendLog(Level.INFO, "Enabled " + getName() + " " + getDescription().getVersion());
         new UpdateChecker(this, 104881).getUpdate();
     }
     @Override
     public void onDisable() {
         metrics.shutdown();
-        message.sendLog("Disabled " + getName() + " " + getDescription().getVersion());
+        message.sendLog(Level.INFO, "Disabled " + getName() + " " + getDescription().getVersion());
     }
     public void reload() {
         if (new File(getDataFolder(), "config.yml").exists()) {
@@ -74,7 +87,7 @@ public final class Chairs extends JavaPlugin {
                 getConfig().load(new File(getDataFolder(), "config.yml"));
                 saveConfig();
             } catch (IOException | InvalidConfigurationException e) {
-                throw new RuntimeException(e);
+                message.sendLog(Level.WARNING, e.getMessage());
             }
         } else {
             getConfig().options().copyDefaults(true);
@@ -83,17 +96,5 @@ public final class Chairs extends JavaPlugin {
     }
     public static boolean isSitting(Player player) {
         return chairData.hasChair(player);
-    }
-    public static Message getMessage() {
-        return message;
-    }
-    public static ChairData getChairData() {
-        return chairData;
-    }
-    public Metrics getMetrics() {
-        return metrics;
-    }
-    public static Chairs getInstance() {
-        return instance;
     }
 }

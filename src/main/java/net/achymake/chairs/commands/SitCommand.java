@@ -16,8 +16,12 @@ import java.util.Collections;
 import java.util.List;
 
 public class SitCommand implements CommandExecutor, TabCompleter {
-    private final ChairData chairData = Chairs.getChairData();
-    private final Message message = Chairs.getMessage();
+    private ChairData getChairData() {
+        return Chairs.getChairData();
+    }
+    private Message getMessage() {
+        return Chairs.getMessage();
+    }
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player) {
@@ -30,23 +34,21 @@ public class SitCommand implements CommandExecutor, TabCompleter {
                             location.setYaw(player.getLocation().getYaw());
                             location.setPitch(0.0F);
                             ArmorStand armorStand = (ArmorStand) player.getWorld().spawnEntity(location, EntityType.ARMOR_STAND);
-                            chairData.setChair(player, armorStand);
+                            getChairData().setChair(player, armorStand);
                             armorStand.setVisible(false);
                             armorStand.setGravity(false);
                             armorStand.setSmall(true);
                             armorStand.addPassenger(player);
                         }
                     } else {
-                        message.sendActionBar(player,"&cYou have to stand on ground");
+                        getMessage().sendActionBar(player,"&cYou have to stand on ground");
                     }
                 } else {
-                    message.sendActionBar(player,"&cYou have to stand on ground");
+                    getMessage().sendActionBar(player,"&cYou have to stand on ground");
                 }
             }
         }
         return true;
-    }
-    private void sitCommand(Player player, Location location) {
     }
     @Override
     public List onTabComplete(CommandSender sender, Command command, String label, String[] args) {

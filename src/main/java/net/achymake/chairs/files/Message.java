@@ -7,10 +7,12 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.logging.Level;
+
 public class Message {
-    private final Chairs chairs;
-    public Message(Chairs chairs) {
-        this.chairs = chairs;
+    private final Chairs plugin;
+    public Message(Chairs plugin) {
+        this.plugin = plugin;
     }
     public void sendActionBar(Player player, String message) {
         player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(color(message)));
@@ -18,10 +20,10 @@ public class Message {
     public void send(CommandSender sender, String message) {
         sender.sendMessage(color(message));
     }
-    public void sendLog(String message) {
-        chairs.getServer().getConsoleSender().sendMessage("[" + chairs.getName() + "] " + message);
-    }
     public String color(String message){
         return ChatColor.translateAlternateColorCodes('&', message);
+    }
+    public void sendLog(Level level, String message) {
+        plugin.getLogger().log(level, message);
     }
 }

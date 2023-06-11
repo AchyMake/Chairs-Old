@@ -11,9 +11,9 @@ import org.bukkit.persistence.PersistentDataType;
 import java.util.UUID;
 
 public class ChairData {
-    private final Chairs chairs;
-    public ChairData(Chairs chairs) {
-        this.chairs = chairs;
+    private final Chairs plugin;
+    public ChairData(Chairs plugin) {
+        this.plugin = plugin;
     }
     public PersistentDataContainer data(Player player) {
         return player.getPersistentDataContainer();
