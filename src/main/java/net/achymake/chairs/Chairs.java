@@ -87,16 +87,16 @@ public final class Chairs extends JavaPlugin {
         if (file.exists()) {
             try {
                 getConfig().load(file);
-                getMessage().sendLog(Level.INFO, "reloaded config file");
+                getMessage().sendLog(Level.INFO, "reloaded config.yml");
             } catch (IOException | InvalidConfigurationException e) {
                 getMessage().sendLog(Level.WARNING, e.getMessage());
             }
             saveConfig();
         } else {
-            getMessage().sendLog(Level.INFO, "creating config file");
+            getMessage().sendLog(Level.INFO, "creating config.yml");
             getConfig().options().copyDefaults(true);
             saveConfig();
-            getMessage().sendLog(Level.INFO, "created config file");
+            getMessage().sendLog(Level.INFO, "created config.yml");
         }
     }
     public static boolean isSitting(Player player) {
