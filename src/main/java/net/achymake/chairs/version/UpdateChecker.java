@@ -45,6 +45,7 @@ public class UpdateChecker {
     public void getUpdate() {
         if (getConfig().getBoolean("notify-update.enable")) {
             (new UpdateChecker(plugin, resourceId)).getVersion((latest) -> {
+                getMessage().sendLog(Level.INFO, "checking latest release");
                 if (plugin.getDescription().getVersion().equalsIgnoreCase(latest)) {
                     getMessage().sendLog(Level.INFO, "You are using the latest version");
                 } else {
