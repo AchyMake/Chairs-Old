@@ -1,4 +1,4 @@
-package net.achymake.chairs.listeners.interact.slabs;
+package net.achymake.chairs.listeners;
 
 import net.achymake.chairs.Chairs;
 import net.achymake.chairs.files.ChairData;
@@ -14,11 +14,11 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
-public class Slabs implements Listener {
+public class PlayerInteractSlabs implements Listener {
     private ChairData getChairData() {
         return Chairs.getChairData();
     }
-    public Slabs(Chairs chairs) {
+    public PlayerInteractSlabs(Chairs chairs) {
         chairs.getServer().getPluginManager().registerEvents(this, chairs);
     }
     @EventHandler(priority = EventPriority.NORMAL)

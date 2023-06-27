@@ -1,6 +1,5 @@
 package net.achymake.chairs.files;
 
-import net.achymake.chairs.Chairs;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.ArmorStand;
@@ -11,10 +10,6 @@ import org.bukkit.persistence.PersistentDataType;
 import java.util.UUID;
 
 public class ChairData {
-    private final Chairs plugin;
-    public ChairData(Chairs plugin) {
-        this.plugin = plugin;
-    }
     public PersistentDataContainer data(Player player) {
         return player.getPersistentDataContainer();
     }

@@ -1,14 +1,14 @@
 name: Chairs
 version: '${project.version}'
 main: net.achymake.chairs.Chairs
-api-version: 1.19
+api-version: 1.15
 prefix: '${project.name}'
 load: POSTWORLD
 author: AchyMake
 description: '${project.description}'
 commands:
   chairs:
-    permission: chairs.reload
+    permission: chairs.command.reload
     description: reload config
     permission-message: You do not have the permission to execute this command
     usage: /chairs reload

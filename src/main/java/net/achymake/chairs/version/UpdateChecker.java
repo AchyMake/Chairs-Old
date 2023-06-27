@@ -2,6 +2,7 @@ package net.achymake.chairs.version;
 
 import net.achymake.chairs.Chairs;
 import net.achymake.chairs.files.Message;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
 import java.io.IOException;
@@ -17,6 +18,9 @@ public class UpdateChecker {
     public UpdateChecker(Chairs plugin, int resourceId) {
         this.plugin = plugin;
         this.resourceId = resourceId;
+    }
+    private FileConfiguration getConfig() {
+        return Chairs.getConfiguration();
     }
     private Message getMessage() {
         return Chairs.getMessage();
@@ -39,7 +43,7 @@ public class UpdateChecker {
         });
     }
     public void getUpdate() {
-        if (plugin.getConfig().getBoolean("notify-update.enable")) {
+        if (getConfig().getBoolean("notify-update.enable")) {
             (new UpdateChecker(plugin, resourceId)).getVersion((latest) -> {
                 if (plugin.getDescription().getVersion().equalsIgnoreCase(latest)) {
                     getMessage().sendLog(Level.INFO, "You are using the latest version");
@@ -51,7 +55,7 @@ public class UpdateChecker {
         }
     }
     public void sendMessage(Player player) {
-        if (plugin.getConfig().getBoolean("notify-update.enable")) {
+        if (getConfig().getBoolean("notify-update.enable")) {
             (new UpdateChecker(plugin, resourceId)).getVersion((latest) -> {
                 if (!plugin.getDescription().getVersion().equalsIgnoreCase(latest)) {
                     getMessage().send(player,"&6" + plugin.getName() + " Update:&f " + latest);

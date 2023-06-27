@@ -1,4 +1,4 @@
-package net.achymake.chairs.listeners.mount;
+package net.achymake.chairs.listeners;
 
 import net.achymake.chairs.Chairs;
 import net.achymake.chairs.files.ChairData;

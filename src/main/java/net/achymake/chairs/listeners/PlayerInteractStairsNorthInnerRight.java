@@ -1,4 +1,4 @@
-package net.achymake.chairs.listeners.interact.stairs;
+package net.achymake.chairs.listeners;
 
 import net.achymake.chairs.Chairs;
 import net.achymake.chairs.files.ChairData;
@@ -15,15 +15,15 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
-public class StairsSouthInnerRight implements Listener {
+public class PlayerInteractStairsNorthInnerRight implements Listener {
     private ChairData getChairData() {
         return Chairs.getChairData();
     }
-    public StairsSouthInnerRight(Chairs chairs) {
+    public PlayerInteractStairsNorthInnerRight(Chairs chairs) {
         chairs.getServer().getPluginManager().registerEvents(this, chairs);
     }
     @EventHandler(priority = EventPriority.NORMAL)
-    public void onStairsSouthInnerRight(PlayerInteractEvent event) {
+    public void onStairsNorthInnerRight(PlayerInteractEvent event) {
         if (!event.getAction().equals(Action.RIGHT_CLICK_BLOCK))return;
         if (event.getClickedBlock() == null)return;
         if (!Tag.STAIRS.isTagged(event.getClickedBlock().getType()))return;
@@ -31,7 +31,7 @@ public class StairsSouthInnerRight implements Listener {
         if (!event.getClickedBlock().getLocation().add(0,1,0).getBlock().getType().isAir())return;
         if (!event.getBlockFace().equals(BlockFace.UP))return;
         if (!((Stairs) event.getClickedBlock().getBlockData()).getHalf().equals(Bisected.Half.BOTTOM))return;
-        if (!((Stairs) event.getClickedBlock().getBlockData()).getFacing().equals(BlockFace.SOUTH))return;
+        if (!((Stairs) event.getClickedBlock().getBlockData()).getFacing().equals(BlockFace.NORTH))return;
         if (!((Stairs) event.getClickedBlock().getBlockData()).getShape().equals(Stairs.Shape.INNER_RIGHT))return;
         if (!event.getPlayer().getInventory().getItemInMainHand().getType().isAir())return;
         if (!event.getPlayer().getInventory().getItemInOffHand().getType().isAir())return;
@@ -39,7 +39,7 @@ public class StairsSouthInnerRight implements Listener {
         if (Chairs.isSitting(event.getPlayer()))return;
         if (!event.getPlayer().isOnGround())return;
         Location location = event.getClickedBlock().getLocation().add(0.5,-0.4,0.5);
-        location.setYaw(-115.0F);
+        location.setYaw(65.0F);
         location.setPitch(0.0F);
         ArmorStand armorStand = (ArmorStand) event.getPlayer().getWorld().spawnEntity(location, EntityType.ARMOR_STAND);
         getChairData().setChair(event.getPlayer(), armorStand);
