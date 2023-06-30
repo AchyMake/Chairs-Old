@@ -127,20 +127,18 @@ public final class Chairs extends JavaPlugin {
         }
     }
     public void checkLatest(Consumer<String> consumer) {
-        getServer().getScheduler().runTaskAsynchronously(this, () -> {
-            try {
-                InputStream inputStream = (new URL("https://api.spigotmc.org/legacy/update.php?resource=" + 104881)).openStream();
-                Scanner scanner = new Scanner(inputStream);
-                if (scanner.hasNext()) {
-                    consumer.accept(scanner.next());
-                    scanner.close();
-                }
-                if (inputStream != null) {
-                    inputStream.close();
-                }
-            } catch (IOException e) {
-                getMessage().sendLog(Level.WARNING, e.getMessage());
+        try {
+            InputStream inputStream = (new URL("https://api.spigotmc.org/legacy/update.php?resource=" + 104881)).openStream();
+            Scanner scanner = new Scanner(inputStream);
+            if (scanner.hasNext()) {
+                consumer.accept(scanner.next());
+                scanner.close();
             }
-        });
+            if (inputStream != null) {
+                inputStream.close();
+            }
+        } catch (IOException e) {
+            getMessage().sendLog(Level.WARNING, e.getMessage());
+        }
     }
 }
