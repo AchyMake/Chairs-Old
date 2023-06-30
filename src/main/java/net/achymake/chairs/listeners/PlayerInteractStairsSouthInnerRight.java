@@ -19,8 +19,8 @@ public class PlayerInteractStairsSouthInnerRight implements Listener {
     private ChairData getChairData() {
         return Chairs.getChairData();
     }
-    public PlayerInteractStairsSouthInnerRight(Chairs chairs) {
-        chairs.getServer().getPluginManager().registerEvents(this, chairs);
+    public PlayerInteractStairsSouthInnerRight(Chairs plugin) {
+        plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
     @EventHandler(priority = EventPriority.NORMAL)
     public void onStairsSouthInnerRight(PlayerInteractEvent event) {

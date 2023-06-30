@@ -19,8 +19,8 @@ public class PlayerInteractStairsNorth implements Listener {
     private ChairData getChairData() {
         return Chairs.getChairData();
     }
-    public PlayerInteractStairsNorth(Chairs chairs) {
-        chairs.getServer().getPluginManager().registerEvents(this, chairs);
+    public PlayerInteractStairsNorth(Chairs plugin) {
+        plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
     @EventHandler(priority = EventPriority.NORMAL)
     public void onStairsNorth(PlayerInteractEvent event) {

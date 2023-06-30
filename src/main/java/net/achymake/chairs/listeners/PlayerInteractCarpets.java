@@ -17,8 +17,8 @@ public class PlayerInteractCarpets implements Listener {
     private ChairData getChairData() {
         return Chairs.getChairData();
     }
-    public PlayerInteractCarpets(Chairs chairs) {
-        chairs.getServer().getPluginManager().registerEvents(this, chairs);
+    public PlayerInteractCarpets(Chairs plugin) {
+        plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
     @EventHandler(priority = EventPriority.NORMAL)
     public void onCarpets(PlayerInteractEvent event) {

@@ -13,8 +13,8 @@ public class EntityDismount implements Listener {
     private ChairData getChairData() {
         return Chairs.getChairData();
     }
-    public EntityDismount(Chairs chairs) {
-        chairs.getServer().getPluginManager().registerEvents(this, chairs);
+    public EntityDismount(Chairs plugin) {
+        plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
     @EventHandler(priority = EventPriority.NORMAL)
     public void onEntityDismount(EntityDismountEvent event) {

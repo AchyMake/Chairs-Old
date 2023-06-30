@@ -13,8 +13,8 @@ public class EntityDamage implements Listener {
     private ChairData getChairData() {
         return Chairs.getChairData();
     }
-    public EntityDamage(Chairs chairs) {
-        chairs.getServer().getPluginManager().registerEvents(this, chairs);
+    public EntityDamage(Chairs plugin) {
+        plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
     @EventHandler(priority = EventPriority.NORMAL)
     public void onEntityDamage(EntityDamageEvent event) {

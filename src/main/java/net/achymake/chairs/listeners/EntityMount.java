@@ -14,8 +14,8 @@ public class EntityMount implements Listener {
     private ChairData getChairData() {
         return Chairs.getChairData();
     }
-    public EntityMount(Chairs chairs) {
-        chairs.getServer().getPluginManager().registerEvents(this, chairs);
+    public EntityMount(Chairs plugin) {
+        plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
     @EventHandler(priority = EventPriority.NORMAL)
     public void onEntityMount(EntityMountEvent event) {

@@ -1,18 +1,19 @@
 package net.achymake.chairs;
 
-import net.achymake.chairs.commands.ChairsCommand;
-import net.achymake.chairs.commands.SitCommand;
-import net.achymake.chairs.files.Message;
-import net.achymake.chairs.files.ChairData;
+import net.achymake.chairs.commands.*;
+import net.achymake.chairs.files.*;
 import net.achymake.chairs.listeners.*;
-import net.achymake.chairs.version.UpdateChecker;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.util.Consumer;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.util.Scanner;
 import java.util.logging.Level;
 
 public final class Chairs extends JavaPlugin {
@@ -41,7 +42,7 @@ public final class Chairs extends JavaPlugin {
         commands();
         events();
         getMessage().sendLog(Level.INFO, "Enabled " + getName() + " " + getDescription().getVersion());
-        new UpdateChecker(this, 104881).getUpdate();
+        sendUpdate();
     }
     private void stop() {
         getMessage().sendLog(Level.INFO, "Disabled " + getName() + " " + getDescription().getVersion());
@@ -101,5 +102,45 @@ public final class Chairs extends JavaPlugin {
     }
     public static boolean isSitting(Player player) {
         return getChairData().hasChair(player);
+    }
+    public void sendUpdate(Player player) {
+        if (getConfig().getBoolean("notify-update.enable")) {
+            checkLatest((latest) -> {
+                if (!getDescription().getVersion().equals(latest)) {
+                    getMessage().send(player,"&6" + getName() + " Update:&f " + latest);
+                    getMessage().send(player,"&6Current Version: &f" + getDescription().getVersion());
+                }
+            });
+        }
+    }
+    public void sendUpdate() {
+        if (getConfig().getBoolean("notify-update.enable")) {
+            checkLatest((latest) -> {
+                getMessage().sendLog(Level.INFO, "Checking latest release");
+                if (getDescription().getVersion().equals(latest)) {
+                    getMessage().sendLog(Level.INFO, "You are using the latest version");
+                } else {
+                    getMessage().sendLog(Level.INFO, "New Update: " + latest);
+                    getMessage().sendLog(Level.INFO, "Current Version: " + getDescription().getVersion());
+                }
+            });
+        }
+    }
+    public void checkLatest(Consumer<String> consumer) {
+        getServer().getScheduler().runTaskAsynchronously(this, () -> {
+            try {
+                InputStream inputStream = (new URL("https://api.spigotmc.org/legacy/update.php?resource=" + 104881)).openStream();
+                Scanner scanner = new Scanner(inputStream);
+                if (scanner.hasNext()) {
+                    consumer.accept(scanner.next());
+                    scanner.close();
+                }
+                if (inputStream != null) {
+                    inputStream.close();
+                }
+            } catch (IOException e) {
+                getMessage().sendLog(Level.WARNING, e.getMessage());
+            }
+        });
     }
 }

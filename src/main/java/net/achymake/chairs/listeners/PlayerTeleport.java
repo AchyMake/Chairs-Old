@@ -15,8 +15,8 @@ public class PlayerTeleport implements Listener {
     private Message getMessage() {
         return Chairs.getMessage();
     }
-    public PlayerTeleport(Chairs chairs) {
-        chairs.getServer().getPluginManager().registerEvents(this, chairs);
+    public PlayerTeleport(Chairs plugin) {
+        plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
     @EventHandler(priority = EventPriority.NORMAL)
     public void onPlayerTeleport(PlayerTeleportEvent event) {
