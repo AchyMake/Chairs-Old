@@ -1,8 +1,7 @@
 package net.achymake.chairs.commands;
 
 import net.achymake.chairs.Chairs;
-import net.achymake.chairs.files.Message;
-import net.achymake.chairs.files.ChairData;
+import net.achymake.chairs.files.Database;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -16,11 +15,8 @@ import java.util.Collections;
 import java.util.List;
 
 public class SitCommand implements CommandExecutor, TabCompleter {
-    private ChairData getChairData() {
-        return Chairs.getChairData();
-    }
-    private Message getMessage() {
-        return Chairs.getMessage();
+    private Database getDatabase() {
+        return Chairs.getDatabase();
     }
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -34,17 +30,17 @@ public class SitCommand implements CommandExecutor, TabCompleter {
                             location.setYaw(player.getLocation().getYaw());
                             location.setPitch(0.0F);
                             ArmorStand armorStand = (ArmorStand) player.getWorld().spawnEntity(location, EntityType.ARMOR_STAND);
-                            getChairData().setChair(player, armorStand);
+                            getDatabase().setChair(player, armorStand);
                             armorStand.setVisible(false);
                             armorStand.setGravity(false);
                             armorStand.setSmall(true);
                             armorStand.addPassenger(player);
                         }
                     } else {
-                        getMessage().sendActionBar(player,"&cYou have to stand on ground");
+                        Chairs.sendActionBar(player,"&cYou have to stand on ground");
                     }
                 } else {
-                    getMessage().sendActionBar(player,"&cYou have to stand on ground");
+                    Chairs.sendActionBar(player,"&cYou have to stand on ground");
                 }
             }
         }

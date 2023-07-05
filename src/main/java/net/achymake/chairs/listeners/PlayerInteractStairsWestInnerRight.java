@@ -1,7 +1,7 @@
 package net.achymake.chairs.listeners;
 
 import net.achymake.chairs.Chairs;
-import net.achymake.chairs.files.ChairData;
+import net.achymake.chairs.files.Database;
 import org.bukkit.Location;
 import org.bukkit.Tag;
 import org.bukkit.block.BlockFace;
@@ -16,8 +16,8 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 public class PlayerInteractStairsWestInnerRight implements Listener {
-    private ChairData getChairData() {
-        return Chairs.getChairData();
+    private Database getDatabase() {
+        return Chairs.getDatabase();
     }
     public PlayerInteractStairsWestInnerRight(Chairs plugin) {
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
@@ -42,7 +42,7 @@ public class PlayerInteractStairsWestInnerRight implements Listener {
         location.setYaw(-25.0F);
         location.setPitch(0.0F);
         ArmorStand armorStand = (ArmorStand) event.getPlayer().getWorld().spawnEntity(location, EntityType.ARMOR_STAND);
-        getChairData().setChair(event.getPlayer(), armorStand);
+        getDatabase().setChair(event.getPlayer(), armorStand);
         armorStand.setVisible(false);
         armorStand.setGravity(false);
         armorStand.setSmall(true);

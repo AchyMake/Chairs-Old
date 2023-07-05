@@ -1,27 +1,23 @@
 package net.achymake.chairs.listeners;
 
 import net.achymake.chairs.Chairs;
-import net.achymake.chairs.files.ChairData;
-import net.achymake.chairs.files.Message;
+import net.achymake.chairs.files.Database;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerTeleportEvent;
 
 public class PlayerTeleport implements Listener {
-    private ChairData getChairData() {
-        return Chairs.getChairData();
-    }
-    private Message getMessage() {
-        return Chairs.getMessage();
+    private Database getDatabase() {
+        return Chairs.getDatabase();
     }
     public PlayerTeleport(Chairs plugin) {
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
     @EventHandler(priority = EventPriority.NORMAL)
     public void onPlayerTeleport(PlayerTeleportEvent event) {
-        if (!getChairData().hasChair(event.getPlayer()))return;
+        if (!getDatabase().hasChair(event.getPlayer()))return;
         event.setCancelled(true);
-        getMessage().send(event.getPlayer(), "&cYou can't teleport while using a chair");
+        Chairs.send(event.getPlayer(), "&cYou can't teleport while using a chair");
     }
 }

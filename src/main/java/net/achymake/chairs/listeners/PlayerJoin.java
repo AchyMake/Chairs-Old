@@ -16,6 +16,6 @@ public class PlayerJoin implements Listener {
     @EventHandler(priority = EventPriority.NORMAL)
     public void onPlayerJoin(PlayerJoinEvent event) {
         if (!event.getPlayer().hasPermission("chairs.command.reload"))return;
-        getPlugin().sendUpdate(event.getPlayer());
+        getPlugin().getUpdate(event.getPlayer());
     }
 }

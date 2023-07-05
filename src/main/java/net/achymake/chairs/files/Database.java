@@ -9,7 +9,7 @@ import org.bukkit.persistence.PersistentDataType;
 
 import java.util.UUID;
 
-public class ChairData {
+public class Database {
     public PersistentDataContainer data(Player player) {
         return player.getPersistentDataContainer();
     }

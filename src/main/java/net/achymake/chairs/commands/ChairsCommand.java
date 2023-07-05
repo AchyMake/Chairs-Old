@@ -1,11 +1,8 @@
 package net.achymake.chairs.commands;
 
 import net.achymake.chairs.Chairs;
-import net.achymake.chairs.files.Message;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
-import org.bukkit.command.TabCompleter;
+import org.bukkit.command.*;
+import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,18 +11,32 @@ public class ChairsCommand implements CommandExecutor, TabCompleter {
     private Chairs getPlugin() {
         return Chairs.getInstance();
     }
-    private Message getMessage() {
-        return Chairs.getMessage();
-    }
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (args.length == 0) {
-            getMessage().send(sender, "&6" + getPlugin().getName() + "&f " + getPlugin().getDescription().getVersion());
+        if (sender instanceof Player) {
+            if (args.length == 0) {
+                Player player = (Player) sender;
+                Chairs.send(player, "&6" + getPlugin().getName() + "&f " + getPlugin().getDescription().getVersion());
+            }
+            if (args.length == 1) {
+                Player player = (Player) sender;
+                if (args[0].equalsIgnoreCase("reload")) {
+                    getPlugin().reload();
+                    Chairs.send(player, "&6Chairs:&f config.yml reloaded");
+                }
+            }
         }
-        if (args.length == 1) {
-            if (args[0].equalsIgnoreCase("reload")) {
-                getPlugin().reload();
-                getMessage().send(sender, "&6Chairs reloaded");
+        if (sender instanceof ConsoleCommandSender) {
+            if (args.length == 0) {
+                ConsoleCommandSender commandSender = (ConsoleCommandSender) sender;
+                Chairs.send(commandSender, getPlugin().getName() + " " + getPlugin().getDescription().getVersion());
+            }
+            if (args.length == 1) {
+                ConsoleCommandSender commandSender = (ConsoleCommandSender) sender;
+                if (args[0].equalsIgnoreCase("reload")) {
+                    getPlugin().reload();
+                    Chairs.send(commandSender, "Chairs: config.yml reloaded");
+                }
             }
         }
         return true;
