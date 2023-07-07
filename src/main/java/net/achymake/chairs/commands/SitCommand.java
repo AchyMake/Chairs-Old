@@ -22,7 +22,7 @@ public class SitCommand implements CommandExecutor, TabCompleter {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player) {
             Player player = (Player) sender;
-            if (args.length == 0){
+            if (args.length == 0) {
                 if (player.isOnGround()) {
                     if (!player.getLocation().add(0,-1,0).getBlock().isEmpty()) {
                         if (!Chairs.isSitting(player)) {
@@ -35,16 +35,19 @@ public class SitCommand implements CommandExecutor, TabCompleter {
                             armorStand.setGravity(false);
                             armorStand.setSmall(true);
                             armorStand.addPassenger(player);
+                            return true;
                         }
                     } else {
                         Chairs.sendActionBar(player,"&cYou have to stand on ground");
+                        return true;
                     }
                 } else {
                     Chairs.sendActionBar(player,"&cYou have to stand on ground");
+                    return true;
                 }
             }
         }
-        return true;
+        return false;
     }
     @Override
     public List onTabComplete(CommandSender sender, Command command, String label, String[] args) {

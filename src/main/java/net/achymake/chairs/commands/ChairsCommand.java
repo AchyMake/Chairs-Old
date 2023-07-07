@@ -17,12 +17,14 @@ public class ChairsCommand implements CommandExecutor, TabCompleter {
             if (args.length == 0) {
                 Player player = (Player) sender;
                 Chairs.send(player, "&6" + getPlugin().getName() + "&f " + getPlugin().getDescription().getVersion());
+                return true;
             }
             if (args.length == 1) {
                 Player player = (Player) sender;
                 if (args[0].equalsIgnoreCase("reload")) {
                     Chairs.reload();
                     Chairs.send(player, "&6Chairs:&f config.yml reloaded");
+                    return true;
                 }
             }
         }
@@ -30,16 +32,18 @@ public class ChairsCommand implements CommandExecutor, TabCompleter {
             if (args.length == 0) {
                 ConsoleCommandSender commandSender = (ConsoleCommandSender) sender;
                 Chairs.send(commandSender, getPlugin().getName() + " " + getPlugin().getDescription().getVersion());
+                return true;
             }
             if (args.length == 1) {
                 ConsoleCommandSender commandSender = (ConsoleCommandSender) sender;
                 if (args[0].equalsIgnoreCase("reload")) {
                     Chairs.reload();
                     Chairs.send(commandSender, "Chairs: config.yml reloaded");
+                    return true;
                 }
             }
         }
-        return true;
+        return false;
     }
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
