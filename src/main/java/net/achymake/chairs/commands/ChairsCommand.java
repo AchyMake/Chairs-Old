@@ -21,7 +21,7 @@ public class ChairsCommand implements CommandExecutor, TabCompleter {
             if (args.length == 1) {
                 Player player = (Player) sender;
                 if (args[0].equalsIgnoreCase("reload")) {
-                    getPlugin().reload();
+                    Chairs.reload();
                     Chairs.send(player, "&6Chairs:&f config.yml reloaded");
                 }
             }
@@ -34,7 +34,7 @@ public class ChairsCommand implements CommandExecutor, TabCompleter {
             if (args.length == 1) {
                 ConsoleCommandSender commandSender = (ConsoleCommandSender) sender;
                 if (args[0].equalsIgnoreCase("reload")) {
-                    getPlugin().reload();
+                    Chairs.reload();
                     Chairs.send(commandSender, "Chairs: config.yml reloaded");
                 }
             }

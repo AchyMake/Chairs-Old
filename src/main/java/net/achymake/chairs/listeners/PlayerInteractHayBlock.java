@@ -26,9 +26,9 @@ public class PlayerInteractHayBlock implements Listener {
         if (event.getClickedBlock() == null)return;
         if (Chairs.isSitting(event.getPlayer()))return;
         if (!event.getClickedBlock().getType().equals(Material.HAY_BLOCK))return;
-        if (!event.getPlayer().hasPermission("chairs.sit.hay_block"))return;
-        if (!event.getClickedBlock().getLocation().add(0,1,0).getBlock().getType().isAir())return;
         if (!event.getBlockFace().equals(BlockFace.UP))return;
+        if (!getDatabase().isAboveAir(event.getClickedBlock()))return;
+        if (!event.getPlayer().hasPermission("chairs.sit.hay_block"))return;
         if (!event.getPlayer().getInventory().getItemInMainHand().getType().isAir())return;
         if (!event.getPlayer().getInventory().getItemInOffHand().getType().isAir())return;
         if (event.getPlayer().isSneaking())return;

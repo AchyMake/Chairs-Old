@@ -25,14 +25,14 @@ public class PlayerInteractScaffolding implements Listener {
         if (!event.getAction().equals(Action.RIGHT_CLICK_BLOCK))return;
         if (event.getClickedBlock() == null)return;
         if (!event.getClickedBlock().getType().equals(Material.SCAFFOLDING))return;
-        if (!event.getPlayer().hasPermission("chairs.sit.scaffolding"))return;
-        if (!event.getClickedBlock().getLocation().add(0,1,0).getBlock().getType().isAir())return;
         if (!event.getBlockFace().equals(BlockFace.UP))return;
+        if (!getDatabase().isAboveAir(event.getClickedBlock()))return;
+        if (!event.getPlayer().hasPermission("chairs.sit.scaffolding"))return;
         if (!event.getPlayer().getInventory().getItemInMainHand().getType().isAir())return;
         if (!event.getPlayer().getInventory().getItemInOffHand().getType().isAir())return;
+        if (!event.getPlayer().isOnGround())return;
         if (event.getPlayer().isSneaking())return;
         if (Chairs.isSitting(event.getPlayer()))return;
-        if (!event.getPlayer().isOnGround())return;
         Location location = event.getClickedBlock().getLocation().add(0.5,0.0,0.5);
         location.setYaw(event.getPlayer().getLocation().getYaw() + 180.0F);
         location.setPitch(0.0F);

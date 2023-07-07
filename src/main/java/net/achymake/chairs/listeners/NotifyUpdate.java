@@ -6,11 +6,11 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
-public class PlayerJoin implements Listener {
+public class NotifyUpdate implements Listener {
     private Chairs getPlugin() {
         return Chairs.getInstance();
     }
-    public PlayerJoin(Chairs plugin) {
+    public NotifyUpdate(Chairs plugin) {
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
     @EventHandler(priority = EventPriority.NORMAL)

@@ -26,6 +26,10 @@ public final class Chairs extends JavaPlugin {
     public static Chairs getInstance() {
         return instance;
     }
+    private static File folder;
+    public static File getFolder() {
+        return folder;
+    }
     private static FileConfiguration configuration;
     public static FileConfiguration getConfiguration() {
         return configuration;
@@ -41,6 +45,7 @@ public final class Chairs extends JavaPlugin {
     @Override
     public void onEnable() {
         instance = this;
+        folder = getDataFolder();
         configuration = getConfig();
         logger = getLogger();
         database = new Database();
@@ -60,10 +65,10 @@ public final class Chairs extends JavaPlugin {
         getCommand("sit").setExecutor(new SitCommand());
     }
     private void events() {
-        new PlayerJoin(this);
-        new PlayerQuit(this);
         new EntityDamage(this);
         new EntityDismount(this);
+        new EntityMount(this);
+        new NotifyUpdate(this);
         new PlayerInteractCarpets(this);
         new PlayerInteractHayBlock(this);
         new PlayerInteractScaffolding(this);
@@ -80,34 +85,37 @@ public final class Chairs extends JavaPlugin {
         new PlayerInteractStairsWest(this);
         new PlayerInteractStairsWestInnerLeft(this);
         new PlayerInteractStairsWestInnerRight(this);
-        new EntityMount(this);
+        new PlayerQuit(this);
         new PlayerTeleport(this);
     }
-    public void reload() {
-        File file = new File(getDataFolder(), "config.yml");
+    public static void reload() {
+        File file = new File(getFolder(), "config.yml");
         if (file.exists()) {
             try {
-                getConfig().load(file);
+                getConfiguration().load(file);
                 sendLog(Level.INFO, "loaded config.yml");
             } catch (IOException | InvalidConfigurationException e) {
                 sendLog(Level.WARNING, e.getMessage());
             }
-            saveConfig();
         } else {
-            getConfig().options().copyDefaults(true);
-            saveConfig();
-            sendLog(Level.INFO, "created config.yml");
+            getConfiguration().options().copyDefaults(true);
+            try {
+                getConfiguration().save(file);
+                sendLog(Level.INFO, "created config.yml");
+            } catch (IOException e) {
+                sendLog(Level.WARNING, e.getMessage());
+            }
         }
     }
     public static boolean isSitting(Player player) {
         return getDatabase().hasChair(player);
     }
-    public void getUpdate(Player player) {
+    public static void getUpdate(Player player) {
         if (notifyUpdate()) {
             getLatest((latest) -> {
-                if (!getDescription().getVersion().equals(latest)) {
-                    send(player,"&6" + getName() + " Update:&f " + latest);
-                    send(player,"&6Current Version: &f" + getDescription().getVersion());
+                if (!getInstance().getDescription().getVersion().equals(latest)) {
+                    send(player,"&6" + getInstance().getName() + " Update:&f " + latest);
+                    send(player,"&6Current Version: &f" + getInstance().getDescription().getVersion());
                 }
             });
         }
@@ -130,7 +138,7 @@ public final class Chairs extends JavaPlugin {
             });
         }
     }
-    public void getLatest(Consumer<String> consumer) {
+    public static void getLatest(Consumer<String> consumer) {
         try {
             InputStream inputStream = (new URL("https://api.spigotmc.org/legacy/update.php?resource=" + 104881)).openStream();
             Scanner scanner = new Scanner(inputStream);
@@ -145,16 +153,19 @@ public final class Chairs extends JavaPlugin {
             sendLog(Level.WARNING, e.getMessage());
         }
     }
-    private boolean notifyUpdate() {
-        return getConfig().getBoolean("notify-update.enable");
+    private static boolean notifyUpdate() {
+        return getConfiguration().getBoolean("notify-update.enable");
     }
     public static void send(ConsoleCommandSender sender, String message) {
         sender.sendMessage(message);
     }
     public static void send(Player player, String message) {
-        player.sendMessage(ChatColor.translateAlternateColorCodes('&', message));
+        player.sendMessage(addColor(message));
     }
     public static void sendActionBar(Player player, String message) {
-        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.translateAlternateColorCodes('&', message)));
+        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(addColor(message)));
+    }
+    public static String addColor(String message) {
+        return ChatColor.translateAlternateColorCodes('&', message);
     }
 }
