@@ -26,16 +26,18 @@ public class SitCommand implements CommandExecutor, TabCompleter {
                 if (player.isOnGround()) {
                     if (!player.getLocation().add(0,-1,0).getBlock().isEmpty()) {
                         if (!Chairs.isSitting(player)) {
-                            Location location = player.getLocation().getBlock().getLocation().add(0.5, -0.9, 0.5);
-                            location.setYaw(player.getLocation().getYaw());
-                            location.setPitch(0.0F);
-                            ArmorStand armorStand = (ArmorStand) player.getWorld().spawnEntity(location, EntityType.ARMOR_STAND);
-                            getDatabase().setChair(player, armorStand);
-                            armorStand.setVisible(false);
-                            armorStand.setGravity(false);
-                            armorStand.setSmall(true);
-                            armorStand.addPassenger(player);
-                            return true;
+                            if (!getDatabase().isOccupied(player.getLocation().getBlock())) {
+                                Location location = player.getLocation().getBlock().getLocation().add(0.5, -0.9, 0.5);
+                                location.setYaw(player.getLocation().getYaw());
+                                location.setPitch(0.0F);
+                                ArmorStand armorStand = (ArmorStand) player.getWorld().spawnEntity(location, EntityType.ARMOR_STAND);
+                                getDatabase().setChair(player, armorStand, armorStand.getLocation().getBlock());
+                                armorStand.setVisible(false);
+                                armorStand.setGravity(false);
+                                armorStand.setSmall(true);
+                                armorStand.addPassenger(player);
+                                return true;
+                            }
                         }
                     } else {
                         Chairs.sendActionBar(player,"&cYou have to stand on ground");

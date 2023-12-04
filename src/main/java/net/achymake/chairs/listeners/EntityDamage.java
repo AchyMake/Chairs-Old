@@ -20,6 +20,7 @@ public class EntityDamage implements Listener {
     public void onEntityDamage(EntityDamageEvent event) {
         if (!event.getEntity().getType().equals(EntityType.PLAYER))return;
         if (!getDatabase().hasChair((Player) event.getEntity()))return;
+        getDatabase().removeOccupied(event.getEntity().getLocation().getBlock());
         getDatabase().dismount((Player) event.getEntity());
     }
 }

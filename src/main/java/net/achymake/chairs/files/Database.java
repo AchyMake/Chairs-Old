@@ -1,5 +1,6 @@
 package net.achymake.chairs.files;
 
+import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
@@ -18,11 +19,15 @@ public class Database {
     public PersistentDataContainer data(Player player) {
         return player.getPersistentDataContainer();
     }
+    public PersistentDataContainer data(Block block) {
+        return block.getChunk().getPersistentDataContainer();
+    }
     public boolean hasChair(Player player) {
         return data(player).has(NamespacedKey.minecraft("chairs.chair"), PersistentDataType.STRING);
     }
-    public void setChair(Player player, ArmorStand armorStand) {
+    public void setChair(Player player, ArmorStand armorStand, Block block) {
         setLastLocation(player);
+        setOccupied(block);
         data(player).set(NamespacedKey.minecraft("chairs.chair"), PersistentDataType.STRING, armorStand.getUniqueId().toString());
     }
     public ArmorStand getChair(Player player) {
@@ -31,6 +36,24 @@ public class Database {
         } else {
             return null;
         }
+    }
+    public boolean isOccupied(Block block) {
+        int x = block.getLocation().getBlockX();
+        int y = block.getLocation().getBlockY();
+        int z = block.getLocation().getBlockZ();
+        return data(block).has(NamespacedKey.minecraft(x+"."+y+"."+z), PersistentDataType.STRING);
+    }
+    public void setOccupied(Block block) {
+        int x = block.getLocation().getBlockX();
+        int y = block.getLocation().getBlockY();
+        int z = block.getLocation().getBlockZ();
+        data(block).set(NamespacedKey.minecraft(x+"."+y+"."+z), PersistentDataType.STRING, "true");
+    }
+    public void removeOccupied(Block block) {
+        int x = block.getLocation().getBlockX();
+        int y = block.getLocation().getBlockY();
+        int z = block.getLocation().getBlockZ();
+        data(block).remove(NamespacedKey.minecraft(x+"."+y+"."+z));
     }
     public void setLastLocation(Player player) {
         data(player).set(NamespacedKey.minecraft("chairs.x"), PersistentDataType.DOUBLE, player.getLocation().getX());

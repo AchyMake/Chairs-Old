@@ -20,6 +20,7 @@ public class EntityDismount implements Listener {
     public void onEntityDismount(EntityDismountEvent event) {
         if (!event.getEntity().getType().equals(EntityType.PLAYER))return;
         if (!event.getDismounted().getType().equals(EntityType.ARMOR_STAND))return;
+        getDatabase().removeOccupied(event.getDismounted().getLocation().getBlock());
         getDatabase().dismount((Player) event.getEntity());
     }
 }
