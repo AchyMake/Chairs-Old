@@ -62,11 +62,17 @@ public class Database {
         return new Location(player.getWorld(), data(player).get(NamespacedKey.minecraft("chairs.x"), PersistentDataType.DOUBLE), data(player).get(NamespacedKey.minecraft("chairs.y"), PersistentDataType.DOUBLE), data(player).get(NamespacedKey.minecraft("chairs.z"), PersistentDataType.DOUBLE), player.getLocation().getYaw(), player.getLocation().getPitch());
     }
     public void dismount(Player player) {
+        removeChair(player);
+        teleportBack(player);
+    }
+    public void teleportBack(Player player) {
+        player.teleport(getLastLocation(player));
+    }
+    public void removeChair(Player player) {
         if (getChair(player) != null) {
             getChair(player).remove();
             data(player).remove(NamespacedKey.minecraft("chairs.chair"));
         }
-        player.teleport(getLastLocation(player));
     }
     public Stairs getStair(Block block) {
         return (Stairs) block.getBlockData();

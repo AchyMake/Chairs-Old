@@ -17,7 +17,7 @@ public class PlayerQuit implements Listener {
     @EventHandler(priority = EventPriority.NORMAL)
     public void onPlayerQuit(PlayerQuitEvent event) {
         if (!getDatabase().hasChair(event.getPlayer()))return;
-        getDatabase().removeOccupied(event.getPlayer().getLocation().getBlock());
+        getDatabase().removeOccupied(event.getPlayer().getLocation().add(0,1,0).getBlock());
         getDatabase().dismount(event.getPlayer());
     }
 }
