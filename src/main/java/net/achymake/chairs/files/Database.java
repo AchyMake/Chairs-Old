@@ -1,6 +1,5 @@
 package net.achymake.chairs.files;
 
-import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
@@ -25,9 +24,8 @@ public class Database {
     public boolean hasChair(Player player) {
         return data(player).has(NamespacedKey.minecraft("chairs.chair"), PersistentDataType.STRING);
     }
-    public void setChair(Player player, ArmorStand armorStand, Block block) {
+    public void setChair(Player player, ArmorStand armorStand) {
         setLastLocation(player);
-        setOccupied(block);
         data(player).set(NamespacedKey.minecraft("chairs.chair"), PersistentDataType.STRING, armorStand.getUniqueId().toString());
     }
     public ArmorStand getChair(Player player) {
@@ -38,21 +36,21 @@ public class Database {
         }
     }
     public boolean isOccupied(Block block) {
-        int x = block.getLocation().getBlockX();
-        int y = block.getLocation().getBlockY();
-        int z = block.getLocation().getBlockZ();
+        int x = block.getX();
+        int y = block.getY();
+        int z = block.getZ();
         return data(block).has(NamespacedKey.minecraft(x+"."+y+"."+z), PersistentDataType.STRING);
     }
     public void setOccupied(Block block) {
-        int x = block.getLocation().getBlockX();
-        int y = block.getLocation().getBlockY();
-        int z = block.getLocation().getBlockZ();
+        int x = block.getX();
+        int y = block.getY();
+        int z = block.getZ();
         data(block).set(NamespacedKey.minecraft(x+"."+y+"."+z), PersistentDataType.STRING, "true");
     }
     public void removeOccupied(Block block) {
-        int x = block.getLocation().getBlockX();
-        int y = block.getLocation().getBlockY();
-        int z = block.getLocation().getBlockZ();
+        int x = block.getX();
+        int y = block.getY();
+        int z = block.getZ();
         data(block).remove(NamespacedKey.minecraft(x+"."+y+"."+z));
     }
     public void setLastLocation(Player player) {

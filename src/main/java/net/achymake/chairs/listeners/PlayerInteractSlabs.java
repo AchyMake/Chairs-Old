@@ -37,11 +37,11 @@ public class PlayerInteractSlabs implements Listener {
         if (event.getPlayer().isSneaking())return;
         if (Chairs.isSitting(event.getPlayer()))return;
         if (getDatabase().isOccupied(block))return;
+        getDatabase().setOccupied(block);
         Location location = block.getLocation().add(0.5,-0.5,0.5);
         location.setYaw(event.getPlayer().getLocation().getYaw() + 180.0F);
         location.setPitch(0.0F);
         ArmorStand armorStand = (ArmorStand) event.getPlayer().getWorld().spawnEntity(location, EntityType.ARMOR_STAND);
-        getDatabase().setChair(event.getPlayer(), armorStand, block);
         armorStand.setVisible(false);
         armorStand.setGravity(false);
         armorStand.setSmall(true);

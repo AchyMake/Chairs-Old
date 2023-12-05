@@ -31,7 +31,7 @@ public class SitCommand implements CommandExecutor, TabCompleter {
                                 location.setYaw(player.getLocation().getYaw());
                                 location.setPitch(0.0F);
                                 ArmorStand armorStand = (ArmorStand) player.getWorld().spawnEntity(location, EntityType.ARMOR_STAND);
-                                getDatabase().setChair(player, armorStand, armorStand.getLocation().getBlock());
+                                getDatabase().setChair(player, armorStand);
                                 armorStand.setVisible(false);
                                 armorStand.setGravity(false);
                                 armorStand.setSmall(true);
